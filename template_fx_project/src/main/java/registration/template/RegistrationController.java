@@ -37,13 +37,14 @@ public class RegistrationController {
             showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                 "Please enter your name");
             return;
-        }
-
+        } 
+         
         if (emailIdField.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                 "Please enter your email id");
             return;
-        }
+        } 
+        
         if (passwordField.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
                 "Please enter a password");
