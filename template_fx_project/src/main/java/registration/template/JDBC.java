@@ -1,4 +1,4 @@
-package registration.template;
+/* package registration.template;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +12,7 @@ public class JDBC {
     //private static final String INSERT_QUERY = "INSERT INTO HW_Airport_List_T (full_name, email_id, password) VALUES (?, ?, ?)";
     private static final String SELECT_QUERY = "SELECT ID, Airport_code, airportName FROM HW_Airport_List_T";
 
-    /* public void insertRecord(String fullName, String emailId, String password) throws SQLException {
+    public void insertRecord(String fullName, String emailId, String password) throws SQLException {
 
         // Step 1: Establishing a Connection and 
         // try-with-resource statement will auto close the connection.
@@ -50,6 +50,5 @@ public class JDBC {
                 }
             }
         }
-    } */
-    
-}
+    }
+} */

@@ -27,9 +27,9 @@
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </RadioButton>
-      <ComboBox id="comboBoxx" fx:id="comboBoxx" layoutX="37.0" layoutY="167.0" onAction="#initialize" prefWidth="150.0" promptText="From" />
+      <ComboBox id="comboBoxx" fx:id="fromDropDown" layoutX="37.0" layoutY="167.0" onAction="#initialize" prefWidth="150.0" promptText="From" />
       <DatePicker id="departDropdown" layoutX="37.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Depart" />
-      <ComboBox id="toDropDown" layoutX="226.0" layoutY="167.0" prefWidth="150.0" promptText="To" />
+      <ComboBox id="toDropDown" fx:id="toDropDown" layoutX="226.0" layoutY="167.0" prefWidth="150.0" promptText="To" />
       <ComboBox id="passengerCountDropdown" layoutX="411.0" layoutY="167.0" prefWidth="150.0" promptText="No. of Passengers" />
       <DatePicker id="returnDropdown" layoutX="225.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Return" />
       <Button id="searchButton" layoutX="411.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Search">

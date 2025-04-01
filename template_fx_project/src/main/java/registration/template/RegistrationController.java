@@ -1,4 +1,4 @@
-package registration.template;
+/* package registration.template;
 
 import java.sql.SQLException;
 
@@ -70,4 +70,4 @@ public class RegistrationController {
         alert.initOwner(owner);
         alert.show();
     }
-}
+} */
