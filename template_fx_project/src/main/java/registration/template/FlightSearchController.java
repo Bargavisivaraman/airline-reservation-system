@@ -42,20 +42,20 @@ public class FlightSearchController {
     private Parent root;
 
     @FXML
-    private RadioButton roundTripRadioButton;
+    private ToggleGroup choice;
 
     @FXML
-    private RadioButton oneWayRadioButton;
+    private RadioButton roundTripRadioButton, oneWayRadioButton;
     
     @FXML
-    private DatePicker returnDate;
-    
-    @FXML
-    private DatePicker departDate;
-
+    private DatePicker returnDate, departDate;
 
     @FXML
     private void initialize() {
+
+        ToggleGroup choice = new ToggleGroup();
+        roundTripRadioButton.setToggleGroup(choice);
+        oneWayRadioButton.setToggleGroup(choice);
 
         System.out.println("inside initialize");
         // Within this initialize method, you can initialize the data for the ComboBox. I have changed the
@@ -76,11 +76,17 @@ public class FlightSearchController {
         oneWayRadioButton.setOnMouseClicked(event ->  {
             returnDate.setVisible(false);
         });
-        
         roundTripRadioButton.setOnMouseClicked(event ->  {
             returnDate.setVisible(true);
         });
 
+    }
+
+    @FXML
+    private void choice(ActionEvent event){
+        if(roundTripRadioButton.isSelected()){
+            oneWayRadioButton.isSelected(false);
+        }
     }
 
     public void searchFlights(ActionEvent event) throws IOException {
