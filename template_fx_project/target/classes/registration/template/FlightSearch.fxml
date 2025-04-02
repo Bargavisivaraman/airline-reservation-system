@@ -17,22 +17,22 @@
             <Font name="SansSerif Regular" size="30.0" />
          </font>
       </Label>
-      <RadioButton id="roundTrip_radio" layoutX="46.0" layoutY="105.0" mnemonicParsing="false" text="Round Trip">
+      <RadioButton id="roundTrip_radio" fx:id="roundTripRadioButton" layoutX="46.0" layoutY="105.0" mnemonicParsing="false" text="Round Trip">
          <font>
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton id="oneWay_radio" layoutX="187.0" layoutY="105.0" mnemonicParsing="false" text="One Way">
+      <RadioButton id="oneWay_radio" fx:id="oneWayRadioButton" layoutX="187.0" layoutY="105.0" onAction="#initialize" mnemonicParsing="false" text="One Way">
          <font>
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </RadioButton>
       <ComboBox id="comboBoxx" fx:id="fromDropDown" layoutX="37.0" layoutY="167.0" onAction="#initialize" prefWidth="150.0" promptText="From" />
-      <DatePicker id="departDropdown" layoutX="37.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Depart" />
+      <DatePicker id="departDate" fx:id="departDate" layoutX="37.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Depart" />
       <ComboBox id="toDropDown" fx:id="toDropDown" layoutX="226.0" layoutY="167.0" prefWidth="150.0" promptText="To" />
-      <ComboBox id="passengerCountDropdown" layoutX="411.0" layoutY="167.0" prefWidth="150.0" promptText="No. of Passengers" />
-      <DatePicker id="returnDropdown" layoutX="225.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Return" />
-      <Button id="searchButton" layoutX="411.0" layoutY="232.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Search">
+      <ComboBox id="passengerCountDropdown" fx:id="noOfPassengersDropDown" layoutX="411.0" layoutY="167.0" prefWidth="150.0" promptText="No. of Passengers" />
+      <DatePicker id="returnDate" fx:id="returnDate" layoutX="225.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Return" />
+      <Button id="searchButton" fx:id="searchButton" layoutX="411.0" layoutY="232.0" onAction="#searchFlights" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Search">
          <font>
             <Font name="SansSerif Regular" size="14.0" />
          </font>
