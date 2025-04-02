@@ -82,13 +82,6 @@ public class FlightSearchController {
 
     }
 
-    @FXML
-    private void choice(ActionEvent event){
-        if(roundTripRadioButton.isSelected()){
-            oneWayRadioButton.isSelected(false);
-        }
-    }
-
     public void searchFlights(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AvailableFligts.fxml"));
         root = loader.load();
