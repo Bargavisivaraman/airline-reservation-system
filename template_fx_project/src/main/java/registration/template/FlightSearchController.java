@@ -116,8 +116,6 @@ public class FlightSearchController {
 
         System.out.println("line 39");
         try {
-            //Class.forName("com.mysql.cj.jdbc.Driver");
-            //Connection con = DriverManager.getConnection(connectionUrl, databaseUser, databasePassword);
             
             String query = "select airportName FROM HW_Airport_List_T";
              statement = conn1.prepareStatement(query);
