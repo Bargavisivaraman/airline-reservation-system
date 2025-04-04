@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="249.0" layoutY="55.0" text="Sign In">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="147.0" text="Email:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="200.0" text="Password:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Hyperlink layoutX="185.0" layoutY="293.0" prefHeight="23.0" prefWidth="230.0" text="Need To Create An Account? Click Here" />
+      <PasswordField layoutX="147.0" layoutY="196.0" prefHeight="26.0" prefWidth="334.0" />
+      <TextField layoutX="147.0" layoutY="143.0" prefHeight="26.0" prefWidth="334.0" />
+   </children>
+</AnchorPane>
