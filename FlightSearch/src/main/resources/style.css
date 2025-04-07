@@ -1,0 +1,37 @@
+/* style.css */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.rounded-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 5;
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-text-fill: #333;
+}
+
+.glass-button {
+    -fx-background-radius: 10;
+    -fx-background-color: rgba(255, 255, 255, 0.75);
+    -fx-text-fill: #eb0000;
+    -fx-font-weight: bold;
+}
+
+.glass-table {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-radius: 10;
+    -fx-table-cell-border-color: transparent;
+}
+
+#LoginButton {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+#LoginButton:hover {
+    -fx-text-fill: #00ffff;
+}
