@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView layoutX="20.0" layoutY="73.0" prefHeight="361.0" prefWidth="686.0">
+        <columns>
+          <TableColumn fx:id="airlineColumn" prefWidth="109.5999755859375" text="Airline" />
+          <TableColumn fx:id="departureColumn" prefWidth="113.60003662109375" text="Departure Time" />
+            <TableColumn fx:id="arrivalColumn" prefWidth="76.0" text="Arrival Time" />
+            <TableColumn fx:id="durationColumn" prefWidth="94.0" text="Duration" />
+            <TableColumn fx:id="economypriceCoulmn" prefWidth="141.5" text="Economy Price" />
+            <TableColumn fx:id="premiumecomonyColumn" prefWidth="150.5" text="Premium Economy Price" />
+        </columns>
+      </TableView>
+      <Label layoutX="20.0" layoutY="26.0" prefHeight="34.0" prefWidth="158.0" text="Search Results">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

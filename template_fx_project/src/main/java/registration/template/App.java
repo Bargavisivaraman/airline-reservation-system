@@ -15,7 +15,7 @@ public class App extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/registration/template/FlightSearch.fxml"));
         System.out.println("after FXML Loader");
         stage.setTitle("Flight Search");
-        stage.setScene(new Scene(root, 1920, 1080)); //setting screen dimensions 
+        stage.setScene(new Scene(root)); //setting screen dimensions 
         
         stage.show(); // show the screen
     } 

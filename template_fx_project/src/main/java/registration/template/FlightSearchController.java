@@ -2,12 +2,12 @@ package registration.template;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -22,16 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.time.LocalDate;
 
 
 public class FlightSearchController {
 
     // If your ComboBox is going to display Strings, you should define that datatype here
     @FXML
-    private ComboBox<String> fromDropDown;
+    private ComboBox<String> fromDropDown, toDropDown;
 
-    @FXML 
-    private ComboBox<String> toDropDown;
 
     @FXML
     private ComboBox<Integer> noOfPassengersDropDown;
@@ -61,6 +60,9 @@ public class FlightSearchController {
         // Within this initialize method, you can initialize the data for the ComboBox. I have changed the
         // method from fillComboBox2() to getData(), which returns a List of Strings.
         // We need to set the ComboBox to use that list.
+        fromDropDown.setEditable(true);
+        toDropDown.setEditable(true);
+        noOfPassengersDropDown.setEditable(true);
         ObservableList<String> airportNameList = FXCollections.observableArrayList(getData());
         ObservableList<Integer> noOfPassengers = FXCollections.observableArrayList();
         noOfPassengers.addAll(1, 2, 3, 4, 5, 6, 7 , 8, 9, 10);
@@ -83,23 +85,26 @@ public class FlightSearchController {
     }
 
     public void searchFlights(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("AvailableFligts.fxml"));
-        root = loader.load();
+      
+        System.out.println("Inside searchFlights");
+        LocalDate departureDate = departDate.getValue();
+        System.out.println(departureDate.toString());
 
-        AvailableFlightsController flightPage = loader.getController();
-        flightPage.displayHello();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightResults.fxml"));
+        System.out.println("After fxml loader");
+        root = loader.load();
+        System.out.println("After loading the root");
+
+        FlightResultsController flightResultsPage = loader.getController();
+        flightResultsPage.displayDepartDate(departureDate.toString());
+        flightResultsPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root); 
         stage.setScene(scene);
         stage.setTitle("Available Flights");
-        stage.show();
+        stage.show(); // show the screen
     }
-
-    /*public void oneWaytrip(ActionEvent event) throws IOException {
-        DatePicker source = (DatePicker) event.getSource();
-        source.setVisible(false);
-    }*/
 
 
 
@@ -117,13 +122,15 @@ public class FlightSearchController {
         System.out.println("line 39");
         try {
             
-            String query = "select airportName FROM HW_Airport_List_T";
+            String query = "select Airport_code, airportName FROM HW_Airport_List_T";
              statement = conn1.prepareStatement(query);
 
             ResultSet set = statement.executeQuery();
 
             while (set.next()) {
-                options.add(set.getString("airportName"));
+                String airportCode = set.getString("Airport_code");
+                String airportName = set.getString("airportName");
+                options.add("(" + airportCode + ")" + " " + airportName);
             }
             System.out.println("line 51");
             set.close();
@@ -139,21 +146,3 @@ public class FlightSearchController {
     }
     
 }
-
-
-    
-   
-   
-   
-   
-   
-
-
-
-    
-   
-   
-   
-   
-   
-
