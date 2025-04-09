@@ -63,8 +63,8 @@ public class FlightResultsController implements Initializable {
 
     public void searchCriteria(String departure, String arrival) {
         System.out.println("Inside searchCritera. The criterias are: " + departure + " & " + arrival +  ".");
-        this.splitDeparture = departure.split("\\)", 2)[1].trim();
-        this.splitArrival = arrival.split("\\)", 2)[1].trim();
+        this.splitDeparture = departure.substring(1, departure.indexOf(")"));
+        this.splitArrival = arrival.substring(1, arrival.indexOf(")"));
         System.out.println("Inside searchCritera. The criterias are: " + splitDeparture + " & " + splitArrival +  ".");
         flightTable.setItems(loadFilteredFlightResults());
     }
