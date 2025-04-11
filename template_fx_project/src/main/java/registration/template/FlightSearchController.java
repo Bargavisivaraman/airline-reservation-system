@@ -84,6 +84,24 @@ public class FlightSearchController {
 
     }
 
+    public void goToSignIn(ActionEvent event) throws IOException {
+        System.out.println("Inside goToSignIn");
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/SignIn.fxml"));
+        root = loader.load();
+        System.out.println("After loading the root");
+
+        //SignInController controller = loader.getController();
+        //controller.displayText();
+        System.out.println("after object creation of sign in controller and calling the displayText method");
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root); 
+        stage.setScene(scene);
+        stage.setTitle("Sign In Page");
+        stage.show(); // show the screen
+    }
+
     public void searchFlights(ActionEvent event) throws IOException {
       
         System.out.println("Inside searchFlights");
@@ -104,6 +122,12 @@ public class FlightSearchController {
         stage.setScene(scene);
         stage.setTitle("Available Flights");
         stage.show(); // show the screen
+    }
+
+    public void displayPreviousUserChoices(String departure, String arrival, LocalDate departDate) {
+        fromDropDown.setValue(departure);
+        toDropDown.setValue(arrival);
+        //departDate.set(departDate);
     }
 
 
@@ -139,7 +163,7 @@ public class FlightSearchController {
             // Return the List
             return options;
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Logger.getLogger(FlightSearchController.class.getName()).log(Level.SEVERE, null, e);
         }
         return options;

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.SignInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.FlightSearchController">
    <children>
       <Label layoutX="211.0" layoutY="36.0" text="Book A Flight">
          <font>
@@ -22,12 +22,12 @@
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </RadioButton>
-      <RadioButton id="oneWay_radio" fx:id="oneWayRadioButton" layoutX="187.0" layoutY="105.0" mnemonicParsing="false" onAction="#initialize" text="One Way">
+      <RadioButton id="oneWay_radio" fx:id="oneWayRadioButton" layoutX="187.0" layoutY="105.0" mnemonicParsing="false" text="One Way">
          <font>
             <Font name="SansSerif Regular" size="14.0" />
          </font>
       </RadioButton>
-      <ComboBox id="comboBoxx" fx:id="fromDropDown" layoutX="37.0" layoutY="167.0" onAction="#initialize" prefWidth="150.0" promptText="From" />
+      <ComboBox id="comboBoxx" fx:id="fromDropDown" layoutX="37.0" layoutY="167.0"  prefWidth="150.0" promptText="From" />
       <DatePicker id="departDate" fx:id="departDate" layoutX="37.0" layoutY="227.0" prefHeight="36.0" prefWidth="150.0" promptText="Depart" />
       <ComboBox id="toDropDown" fx:id="toDropDown" layoutX="226.0" layoutY="167.0" prefWidth="150.0" promptText="To" />
       <ComboBox id="passengerCountDropdown" fx:id="noOfPassengersDropDown" layoutX="411.0" layoutY="167.0" prefWidth="150.0" promptText="No. of Passengers" />
@@ -43,6 +43,6 @@
             <Image url="@../../../../../../../../airplanePNG.png" />
          </image>
       </ImageView>
-      <Button layoutX="532.0" layoutY="14.0" mnemonicParsing="false" text="Sign In" />
+      <Button layoutX="532.0" layoutY="14.0" mnemonicParsing="false" text="Sign In" onAction="#goToSignIn"/>
    </children>
 </AnchorPane>

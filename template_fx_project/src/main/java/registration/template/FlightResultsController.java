@@ -16,8 +16,6 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,12 +25,12 @@ import javafx.scene.control.*;
 public class FlightResultsController implements Initializable {
 
     @FXML
-    private Label dateDisplay;
-
-    @FXML
-    private Parent stage;
-    private Parent scene;
+    private Stage stage;
+    private Scene scene;
     private Parent root;
+    
+    @FXML
+    private Label dateDisplay;
 
     @FXML
     private TableView<AvailableFlightsModel> flightTable;
@@ -67,6 +65,18 @@ public class FlightResultsController implements Initializable {
         this.splitArrival = arrival.substring(1, arrival.indexOf(")"));
         System.out.println("Inside searchCritera. The criterias are: " + splitDeparture + " & " + splitArrival +  ".");
         flightTable.setItems(loadFilteredFlightResults());
+    }
+
+    public void backToSearch(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightResults.fxml"));
+        root = loader.load();
+
+        //FlightSearchController flightResultsPage = loader.getController();
+        //flightResultsPage.displayPreviousUserChoices(this.splitDeparture, this.splitArrival, LocalDate.parse(dateDisplay.getText()));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
