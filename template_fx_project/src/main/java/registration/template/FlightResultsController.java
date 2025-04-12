@@ -52,8 +52,8 @@ public class FlightResultsController implements Initializable {
 
     ObservableList<AvailableFlightsModel> flightResults;
 
-    private String splitDeparture;
-    private String splitArrival;
+    private String departureCode;
+    private String arrivalCode;
 
     public void displayDepartDate(String departureDate) {
         dateDisplay.setText(departureDate);
@@ -61,9 +61,9 @@ public class FlightResultsController implements Initializable {
 
     public void searchCriteria(String departure, String arrival) {
         System.out.println("Inside searchCritera. The criterias are: " + departure + " & " + arrival +  ".");
-        this.splitDeparture = departure.substring(1, departure.indexOf(")"));
-        this.splitArrival = arrival.substring(1, arrival.indexOf(")"));
-        System.out.println("Inside searchCritera. The criterias are: " + splitDeparture + " & " + splitArrival +  ".");
+        this.departureCode = departure.substring(1, 4);
+        this.arrivalCode = arrival.substring(1, 4);
+        System.out.println("Inside searchCritera. The criterias are: " + departureCode + " & " + arrivalCode +  ".");
         flightTable.setItems(loadFilteredFlightResults());
     }
 
@@ -72,7 +72,7 @@ public class FlightResultsController implements Initializable {
         root = loader.load();
 
         //FlightSearchController flightResultsPage = loader.getController();
-        //flightResultsPage.displayPreviousUserChoices(this.splitDeparture, this.splitArrival, LocalDate.parse(dateDisplay.getText()));
+        //flightResultsPage.displayPreviousUserChoices(this.departureCode, this.arrivalCode, LocalDate.parse(dateDisplay.getText()));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -91,8 +91,8 @@ public class FlightResultsController implements Initializable {
 
         try {
             statement = conn1.prepareStatement(availableFlightsQuery);
-            statement.setString(1, splitDeparture);
-            statement.setString(2, splitArrival);
+            statement.setString(1, departureCode);
+            statement.setString(2, arrivalCode);
 
             ResultSet set = statement.executeQuery();
 
