@@ -12,7 +12,7 @@ public class DatabaseConnection {
         System.out.println("inside getDBConnection");
         String databaseName = "HW_Airports";
         String databaseUser = "root";
-        String databasePassword = "Arrshan_12";
+        String databasePassword = "SQLCooked!";
         String url = "jdbc:mysql://localhost:3306/" + databaseName;
 
         try{
