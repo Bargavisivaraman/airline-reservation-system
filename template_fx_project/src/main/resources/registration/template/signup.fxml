@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.SignUpController">
    <children>
       <TextField layoutX="205.0" layoutY="112.0" prefHeight="26.0" prefWidth="257.0" />
       <PasswordField layoutX="205.0" layoutY="251.0" prefHeight="26.0" prefWidth="257.0" />
@@ -38,7 +38,7 @@
          </font>
       </Label>
       <PasswordField layoutX="205.0" layoutY="298.0" prefHeight="26.0" prefWidth="257.0" />
-      <Hyperlink layoutX="189.0" layoutY="342.0" text="Already Have An Account? Sign In Here" />
+      <Hyperlink layoutX="189.0" layoutY="342.0" onAction="#signUpToSignIn" text="Already Have An Account? Sign In Here" />
       <Label layoutX="80.0" layoutY="163.0" text="Last Name:">
          <font>
             <Font size="14.0" />

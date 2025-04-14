@@ -26,14 +26,14 @@ public class SignUpController {
     private Parent root;
 
     @FXML
-    private Label signInDisplay;
+    private Label signUpDisplay;
 
     public void displayText() {
         
     }
- 
+    
     public void signUpToSignIn(ActionEvent event) throws IOException {
-        FXMLLoader Loader = new FXMLLoader(getClass().getResource("/registration/template/SignIn.fxml"));
+        FXMLLoader Loader = new FXMLLoader(getClass().getResource("/registration/template/signin.fxml"));
         root = Loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
