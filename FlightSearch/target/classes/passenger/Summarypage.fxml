@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="passenger.SummaryPageController">
+
+    <Label fx:id="flightDetailsLabel" text="Flight Details will appear here" />
+    <Label fx:id="passengerDetailsLabel" text="Passenger Info will appear here" />
+
+    <Button text="Back" onAction="#handleBack"/>
+    <Button text="Proceed to Payment" onAction="#handleProceedToPayment"/>
+</VBox>

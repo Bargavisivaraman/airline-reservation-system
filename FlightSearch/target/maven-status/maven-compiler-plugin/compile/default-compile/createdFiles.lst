@@ -1,4 +1,9 @@
 FlightSearch\Main.class
+passenger\AddPassengerController.class
 FlightSearch\DatabaseConnection.class
 FlightSearch\FlightSearchController.class
+FlightSearch\PassengerLauncher.class
+FlightSearch\DatabaseTitle.class
+passenger\PassengerModel.class
+passenger\SummaryPageController.class
 FlightSearch\FlightSearchModel.class

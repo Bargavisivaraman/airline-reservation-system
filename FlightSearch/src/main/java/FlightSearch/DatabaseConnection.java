@@ -2,27 +2,23 @@ package FlightSearch;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    public Connection databaseLink;
-
-    public Connection getDBConnection() {
-        String databaseName = "HW_Airports";
-        String databaseUser = "root";
-        String databasePassword = "Cookieloverr00#";
-        String url = "jdbc:mysql://localhost:3306/" + databaseName + "?useSSL=false&serverTimezone=UTC";
-
+    public static Connection getConnection() {
+        Connection connection = null;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            databaseLink = DriverManager.getConnection(url, databaseUser, databasePassword);
+            String url = "jdbc:mysql://127.0.0.1:3306/airline_reservation";
+            String user = "root";
+            String password = "Subbiah@2022"; // your MySQL password here
 
-        } catch (Exception e) {
-            System.out.println("❌ Database connection failed:");
-            e.printStackTrace();
+            connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Database connected successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error connecting to database: " + e.getMessage());
         }
 
-        return databaseLink;
+        return connection;
     }
-
 }

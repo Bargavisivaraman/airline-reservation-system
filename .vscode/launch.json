@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Run Passenger Page",
+      "request": "launch",
+      "mainClass": "FlightSearch.PassengerLauncher",
+      "vmArgs": "--module-path C:/openjfx-23.0.2_windows-x64_bin-sdk/lib --add-modules javafx.controls,javafx.fxml"
+    }
+  ]
+}

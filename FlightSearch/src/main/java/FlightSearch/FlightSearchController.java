@@ -59,8 +59,7 @@ public class FlightSearchController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resource) {
 
-        DatabaseConnection connectNow = new DatabaseConnection();
-        Connection connectDB = connectNow.getDBConnection();
+       Connection conn = DatabaseConnection.getConnection();
 
         String searchViewQuery = "SELECT id, iata_code, airport_name, city_name, country_name FROM HW_Airport_List_T";
 
@@ -76,7 +75,8 @@ public class FlightSearchController implements Initializable {
 
         // database connection
         try {
-            Statement statement = connectDB.createStatement();
+            Statement statement = conn.createStatement();
+
             ResultSet queryOutput = statement.executeQuery(searchViewQuery);
             // loops thoruh database
             while (queryOutput.next()) {
