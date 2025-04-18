@@ -68,7 +68,7 @@ public class FlightResultsController implements Initializable {
     }
 
     public void backToSearch(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightResults.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightSearch.fxml"));
         root = loader.load();
 
         //FlightSearchController flightResultsPage = loader.getController();
