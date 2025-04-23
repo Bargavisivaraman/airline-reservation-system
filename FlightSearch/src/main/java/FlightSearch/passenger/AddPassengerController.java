@@ -28,59 +28,64 @@ public class AddPassengerController implements Initializable {
     private ComboBox<String> titleCombobox;
     @FXML
     private ComboBox<String> mealPrefBox;
-
     @FXML
     private ComboBox<String> seatPrefBox;
 
-
     @FXML
     private TextField firstNameField, lastNameField, emailField, phoneField, cityField, stateField;
-    
-
 
     @FXML
     private DatePicker dobPicker;
 
     @Override
-public void initialize(URL location, ResourceBundle resources) {
-    try {
-        // Load title options from database
-        Connection conn = FlightSearch.DatabaseTitle.getConnection();
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            // Load title options from database
+            Connection conn = FlightSearch.DatabaseTitle.getConnection();
+            PreparedStatement stmt = conn.prepareStatement("SELECT name FROM titles");
+            ResultSet rs = stmt.executeQuery();
 
-        PreparedStatement stmt = conn.prepareStatement("SELECT name FROM titles");
-        ResultSet rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            titleCombobox.getItems().add(rs.getString("name"));
+            while (rs.next()) {
+                titleCombobox.getItems().add(rs.getString("name"));
+            }
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText("Failed to Load Titles");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
-        conn.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Database Error");
-        alert.setHeaderText("Failed to Load Titles");
-        alert.setContentText(e.getMessage());
-        alert.showAndWait();
+
+        mealPrefBox.getItems().addAll("Vegetarian", "Non-Vegetarian", "Vegan", "Kosher");
+        seatPrefBox.getItems().addAll("Window", "Middle", "Aisle");
     }
 
-    mealPrefBox.getItems().addAll("Vegetarian", "Non-Vegetarian", "Vegan", "Kosher");
-    seatPrefBox.getItems().addAll("Window", "Middle", "Aisle");
-}
+    @FXML
+    private void handleProceed(ActionEvent event) throws IOException {
+        System.out.println("Proceed button clicked!");
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/passenger/Summarypage.fxml"));
+        Parent root = loader.load();
 
-@FXML
-private void handleProceed(javafx.event.ActionEvent event) throws IOException {
-    {
-    System.out.println("Proceed button clicked!");
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/passenger/Summarypage.fxml"));
-    Parent root = loader.load();
+        // Get the controller and pass the data
+        SummaryPageController summaryController = loader.getController();
+        summaryController.setPassengerData(
+                titleCombobox.getValue(),
+                firstNameField.getText(),
+                lastNameField.getText(),
+                emailField.getText(),
+                phoneField.getText(),
+                cityField.getText(),
+                stateField.getText(),
+                dobPicker.getValue() != null ? dobPicker.getValue().toString() : "",
+                mealPrefBox.getValue(),
+                seatPrefBox.getValue()
+        );
 
-    Stage stage = (Stage)((javafx.scene.Node) event.getSource()).getScene().getWindow();
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
-}
-}
-
-
+        Stage stage = (Stage)((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 }

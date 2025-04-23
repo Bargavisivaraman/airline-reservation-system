@@ -2,6 +2,7 @@ FlightSearch\Main.class
 passenger\AddPassengerController.class
 FlightSearch\DatabaseConnection.class
 FlightSearch\FlightSearchController.class
+passenger\PaymentController.class
 FlightSearch\PassengerLauncher.class
 FlightSearch\DatabaseTitle.class
 passenger\PassengerModel.class
