@@ -79,6 +79,16 @@ public class FlightResultsController implements Initializable {
         stage.show();
     }
 
+    public void chooseFlight(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/PassengerDetails.FXML"));
+        root = loader.load();
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     ObservableList<AvailableFlightsModel> loadFilteredFlightResults() {
         System.out.println("Inside loadFilteredFlightResults");
@@ -87,7 +97,7 @@ public class FlightResultsController implements Initializable {
         Connection conn1 = dbConn.getDBConnection();
         PreparedStatement statement;
 
-        String availableFlightsQuery = "SELECT flightID, departure, arrival, price, availableSeats " + "FROM HW_Flight_List_T WHERE departure = ? AND arrival = ?";
+        String availableFlightsQuery = "SELECT flightID, departure, arrival, price, availableSeats FROM HW_Flight_List_T WHERE departure = ? AND arrival = ?";
 
         try {
             statement = conn1.prepareStatement(availableFlightsQuery);

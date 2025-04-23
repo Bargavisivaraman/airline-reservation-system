@@ -11,10 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.collections.transformation.FilteredList;
 
 import java.io.IOException;
 import java.sql.*;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.time.LocalDate;
+
 
 
 public class FlightSearchController {
@@ -82,6 +85,51 @@ public class FlightSearchController {
             returnDate.setVisible(true);
         });
 
+        //creates an instance of FilteredList with parameters of airportNameList that have been previously populated
+        final FilteredList<String> filteredFromList = new FilteredList<>(airportNameList, s -> true);
+        FilteredList<String> filteredToList = new FilteredList<>(airportNameList, s -> true);
+
+        //populates dromdropdown and todropdown with their corresponding filteredlists
+        fromDropDown.setItems(filteredFromList);
+        toDropDown.setItems(filteredToList);
+
+        // from dropdown filtering
+
+        fromDropDown.getEditor().textProperty().addListener((obs,oldValue,newValue)-> {
+            final TextField editor =fromDropDown.getEditor();
+            final String selected = fromDropDown.getSelectionModel().getSelectedItem();
+
+            //prevent override of user if selected already
+
+            if(selected == null || selected.equals(editor.getText())){
+                filteredFromList.setPredicate(item -> {
+                    if(newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+
+                    String lowercaseFilter = newValue.toLowerCase();
+                    return item.toLowerCase().contains(lowercaseFilter);
+                });
+            }
+
+        });
+
+        //To dropDown filtering
+        toDropDown.getEditor().textProperty().addListener((obs,oldValue,newValue)-> {
+            final TextField editor = toDropDown.getEditor();
+            final String selected = toDropDown.getSelectionModel().getSelectedItem();
+
+            if(selected == null || !selected.equals(editor.getText())){
+                filteredToList.setPredicate(item -> {
+                    if(newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+                    String lowercaseFilter = newValue.toLowerCase();
+                    return item.toLowerCase().contains(lowercaseFilter);
+                });
+
+            }
+        });
     }
 
     public void goToSignIn(ActionEvent event) throws IOException {
@@ -101,6 +149,10 @@ public class FlightSearchController {
         stage.setTitle("Sign In Page");
         stage.show(); // show the screen
     }
+
+
+    
+
 
     public void searchFlights(ActionEvent event) throws IOException {
       

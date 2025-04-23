@@ -12,7 +12,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         System.out.println("Inside start::" +getClass());
-        Parent root = FXMLLoader.load(getClass().getResource("/registration/template/FlightSearch.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/registration/template/Layout.fxml"));
         System.out.println("after FXML Loader");
         stage.setTitle("Flight Search");
         stage.setScene(new Scene(root)); //setting screen dimensions 
