@@ -19,7 +19,7 @@ public class SummaryPageController {
     @FXML
     private Label passengerDetailsLabel;
 
-    // This method gets all the passenger info and displays it nicely
+    // Display formatted passenger info
     public void setPassengerData(String title, String firstName, String lastName, String email,
                                  String phone, String city, String state, String dob,
                                  String mealPref, String seatPref) {
@@ -49,11 +49,22 @@ public class SummaryPageController {
     }
 
     @FXML
-    private void handleProceedToPayment(ActionEvent event) {
+    private void handleFinishBooking(ActionEvent event) {
         try {
-            Parent paymentPage = FXMLLoader.load(getClass().getResource("/passenger/PaymentPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/passenger/BookingConfirmation.fxml"));
+            Parent confirmationPage = loader.load();
+
+            // Extract passenger name from the label
+            String[] lines = passengerDetailsLabel.getText().split("\n");
+            String nameLine = lines[0]; // "Name: Mr. John Doe"
+            String passengerName = nameLine.replace("Name: ", "").trim();
+
+            // Set the name in the confirmation controller
+            BookingConfirmationController controller = loader.getController();
+            controller.setPassengerName(passengerName);
+
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(new Scene(paymentPage));
+            window.setScene(new Scene(confirmationPage));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,27 +5,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.net.URL;
 
-
 public class PassengerLauncher extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Make sure this matches your resources path structure
         URL fxmlLocation = getClass().getClassLoader().getResource("passenger/Passengerdetails.fxml");
-System.out.println("FXML path: " + fxmlLocation);
-if (fxmlLocation == null) {
-    throw new RuntimeException("FXML file not found!");
-}
-FXMLLoader loader = new FXMLLoader(fxmlLocation);
-Parent root = loader.load();
+        System.out.println("FXML path: " + fxmlLocation);
+        if (fxmlLocation == null) {
+            throw new RuntimeException("FXML file not found!");
+        }
 
+        FXMLLoader loader = new FXMLLoader(fxmlLocation);
+        Parent root = loader.load();
 
+        Scene scene = new Scene(root, 600, 500); // Match new FXML size
 
         primaryStage.setTitle("Passenger Details");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false); // Lock size
         primaryStage.show();
     }
-    
+
     public static void main(String[] args) {
         launch(args);
     }
