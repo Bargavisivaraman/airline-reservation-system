@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane prefHeight="708.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.FlightResultsController" fitToWidth="true">
+
+    <VBox spacing="15" style="-fx-padding: 20;">
+        <!-- Top Section -->
+        <VBox alignment="TOP_LEFT" spacing="10">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Spoink Airlines" />
+            <Label text="Location to Destination" fx:id = "LocationDestination" />
+            <Label text="Return • One passenger" />
+        </VBox>
+
+        <!-- Center Section -->
+        <VBox spacing="15">
+            <Button fx:id="BackButton" mnemonicParsing="false" text="Back" />
+
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Choose your inbound flight" />
+            <Label text="Home to destination" />
+            <Hyperlink text="page with info on baggage and fees" />
+            <Label style="-fx-text-fill: green;" text="Lowest total price for one passenger USD 2,522.21" />
+            <Label text="Inclusive of airfare, taxes, fees, and carrier-imposed charges" />
+            <Label fx:id="DataTimeFLightLabel" style="-fx-font-style: italic;" text="DataTime for flight" />
+
+            <HBox spacing="10">
+                <ToggleButton text="Economy" />
+                <ToggleButton text="Premium Economy" />
+                <ToggleButton text="Business" />
+                <ToggleButton text="First" />
+            </HBox>
+
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" fitToHeight = "true" style="-fx-background-color: transparent;">
+                <VBox fx:id="flightResultsContainer" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;" />
+            </ScrollPane>
+
+            <Label text="Sort: Lowest price" />
+        </VBox>
+    </VBox>
+</ScrollPane>
