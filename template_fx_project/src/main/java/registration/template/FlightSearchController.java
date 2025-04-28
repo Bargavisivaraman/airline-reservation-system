@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -16,6 +17,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.sql.*;
@@ -51,6 +53,15 @@ public class FlightSearchController {
     private DatePicker returnDate, departDate;
 
     @FXML
+    private Label userGreeting;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Button signInButton;
+
+    @FXML
     private void initialize() {
 
         ToggleGroup choice = new ToggleGroup();
@@ -58,9 +69,6 @@ public class FlightSearchController {
         oneWayRadioButton.setToggleGroup(choice);
 
         System.out.println("inside initialize");
-        // Within this initialize method, you can initialize the data for the ComboBox. I have changed the
-        // method from fillComboBox2() to getData(), which returns a List of Strings.
-        // We need to set the ComboBox to use that list.
         fromDropDown.setEditable(true);
         toDropDown.setEditable(true);
         noOfPassengersDropDown.setEditable(true);
@@ -87,7 +95,7 @@ public class FlightSearchController {
         FilteredList<String> filteredFromList = new FilteredList<>(airportNameList, s -> true);
         FilteredList<String> filteredToList = new FilteredList<>(airportNameList, s -> true);
 
-        //populates dromdropdown and todropdown with their corresponding filteredlists
+        //populates dropdowns with their corresponding filteredlists
         fromDropDown.setItems(filteredFromList);
         toDropDown.setItems(filteredToList);
 
@@ -132,21 +140,17 @@ public class FlightSearchController {
     }
 
     public void goToSignIn(ActionEvent event) throws IOException {
-        System.out.println("Inside goToSignIn");
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/SignIn.fxml"));
+        System.out.println("goToSignIn method called");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/signin.fxml"));
         root = loader.load();
-        System.out.println("After loading the root");
-
-        //SignInController controller = loader.getController();
-        //controller.displayText();
-        System.out.println("after object creation of sign in controller and calling the displayText method");
+        System.out.println("signin.fxml loaded successfully");
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root); 
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Sign In Page");
-        stage.show(); // show the screen
+        stage.show();
+        System.out.println("Sign In page displayed");
     }
 
     public void searchFlights(ActionEvent event) throws IOException {
@@ -177,17 +181,19 @@ public class FlightSearchController {
         //departDate.set(departDate);
     }
 
+    public void displayUserName(String firstName) {
+        userGreeting.setText("Hello, " + firstName + "!");
+        userGreeting.setVisible(true);
+        logoutButton.setVisible(true);
+        signInButton.setVisible(false); // Hide the "Sign In" button
+    }
 
-
-    /**
-     * Here we will define the method that builds the List used by the ComboBox
-     */
     private List<String> getData() {
         DatabaseConnection dbConn = new DatabaseConnection();
         Connection conn1 = dbConn.getDBConnection();
         PreparedStatement statement;
     
-        // Define the data you will be returning, in this case, a List of Strings for the ComboBox
+        // List of Strings for the ComboBox
         List<String> options = new ArrayList<>();
 
         System.out.println("line 39");

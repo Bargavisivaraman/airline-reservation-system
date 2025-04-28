@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -137,14 +138,21 @@ private void validateForm() {
         
             stmt.executeUpdate();
             System.out.println("User added to database!");
+            
+            // Show success popup
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sign Up Successful");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully signed up!");
+            alert.showAndWait();
 
-            // Optional: Clear fields after insert
+            // Clear fields after insert
             firstNameField.clear();
             lastNameField.clear();
             emailField.clear();
             pwdField.clear();
             pwdConfirmField.clear();
-            // reservationIdField.clear();
+            //reservationIdField.clear();
 
             stmt.close();
             conn2.close();
