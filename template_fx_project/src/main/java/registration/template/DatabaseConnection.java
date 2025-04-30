@@ -22,7 +22,7 @@ public class DatabaseConnection {
             
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("❌ Database connection failed:");
+            System.out.println("Database connection failed:");
         }
         
         return databaseLink;

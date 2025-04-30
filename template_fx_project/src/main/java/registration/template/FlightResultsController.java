@@ -54,6 +54,11 @@ public class FlightResultsController implements Initializable {
 
     private String departureCode;
     private String arrivalCode;
+    private String storedFirstName;
+
+    public void setUserName(String firstName) {
+        this.storedFirstName = firstName;
+    }
 
     public void displayDepartDate(String departureDate) {
         dateDisplay.setText(departureDate);
@@ -70,15 +75,15 @@ public class FlightResultsController implements Initializable {
     public void backToSearch(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightSearch.fxml"));
         root = loader.load();
-
-        //FlightSearchController flightResultsPage = loader.getController();
-        //flightResultsPage.displayPreviousUserChoices(this.departureCode, this.arrivalCode, LocalDate.parse(dateDisplay.getText()));
+    
+        FlightSearchController flightSearchController = loader.getController();
+        flightSearchController.displayUserName(storedFirstName); // reapply greeting and buttons
+    
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
-
 
     ObservableList<AvailableFlightsModel> loadFilteredFlightResults() {
         System.out.println("Inside loadFilteredFlightResults");

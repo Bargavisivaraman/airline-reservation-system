@@ -62,6 +62,11 @@ public class FlightSearchController {
     private Button signInButton;
 
     @FXML
+    private Button accountButton;
+
+    private String storedFirstName;
+
+    @FXML
     private void initialize() {
 
         ToggleGroup choice = new ToggleGroup();
@@ -153,26 +158,36 @@ public class FlightSearchController {
         System.out.println("Sign In page displayed");
     }
 
+    public void goToAccount(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
+        root = loader.load();
+    
+        Account accountController = loader.getController();
+        accountController.setUserName(storedFirstName); // Pass the user's name
+    
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void searchFlights(ActionEvent event) throws IOException {
-      
         System.out.println("Inside searchFlights");
         LocalDate departureDate = departDate.getValue();
-        System.out.println(departureDate.toString());
-
+    
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightResults.fxml"));
-        System.out.println("After fxml loader");
         root = loader.load();
-        System.out.println("After loading the root");
-
+    
         FlightResultsController flightResultsPage = loader.getController();
+        flightResultsPage.setUserName(storedFirstName); //Pass user's name
         flightResultsPage.displayDepartDate(departureDate.toString());
         flightResultsPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
-
+    
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root); 
         stage.setScene(scene);
         stage.setTitle("Available Flights");
-        stage.show(); // show the screen
+        stage.show();
     }
 
     public void displayPreviousUserChoices(String departure, String arrival, LocalDate departDate) {
@@ -182,10 +197,12 @@ public class FlightSearchController {
     }
 
     public void displayUserName(String firstName) {
+        this.storedFirstName = firstName;
         userGreeting.setText("Hello, " + firstName + "!");
         userGreeting.setVisible(true);
         logoutButton.setVisible(true);
-        signInButton.setVisible(false); // Hide the "Sign In" button
+        accountButton.setVisible(true);
+        signInButton.setVisible(false);
     }
 
     private List<String> getData() {

@@ -41,21 +41,31 @@
          <image>
             <Image url="@SpoinkSearch_highres.png" />
          </image></ImageView>
-      <ImageView fitHeight="97.0" fitWidth="327.0" layoutX="438.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="125.0" fitWidth="140.0" layoutX="238.0" layoutY="263.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@SpoinkSearch_highres_8x.png" />
+            <Image url="@SpoinkSearch.png" />
          </image>
       </ImageView>
       <Button fx:id="signInButton" layoutX="532.0" layoutY="14.0" mnemonicParsing="false" onAction="#goToSignIn" text="Sign In" />
-      <Label fx:id="userGreeting" layoutX="450.0" layoutY="20.0" text="" visible="false">
+      <Button fx:id="accountButton" layoutX="450.0" layoutY="18.0" mnemonicParsing="false" onAction="#goToAccount" text="Account" visible="false">
          <font>
             <Font name="SansSerif Regular" size="12.0" />
          </font>
-</Label>
-   <Button fx:id="logoutButton" layoutX="520.0" layoutY="18.0" mnemonicParsing="false" onAction="#goToSignIn" text="Logout" visible="false">
-      <font>
-         <Font name="SansSerif Regular" size="12.0" />
-      </font>
-   </Button>
+      </Button>
+      <Button fx:id="logoutButton" layoutX="520.0" layoutY="18.0" mnemonicParsing="false" onAction="#goToSignIn" text="Logout" visible="false">
+         <font>
+            <Font name="SansSerif Regular" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="userGreeting" layoutX="515.0" layoutY="50.0" text="" visible="false">
+         <font>
+            <Font name="SansSerif Regular" size="11.0" />
+         </font>
+      </Label>
+      <Label layoutX="197.0" layoutY="372.0" prefHeight="23.0" prefWidth="206.0" text="Spoink Airlines Reservation" underline="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
