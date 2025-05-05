@@ -25,9 +25,10 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Hyperlink layoutX="185.0" layoutY="293.0" onAction="#signInToSignUp" prefHeight="23.0" prefWidth="230.0" text="Need To Create An Account? Click Here" />
-      <PasswordField layoutX="147.0" layoutY="196.0" prefHeight="26.0" prefWidth="334.0" />
-      <TextField layoutX="147.0" layoutY="143.0" prefHeight="26.0" prefWidth="334.0" />
+      <Hyperlink layoutX="175.0" layoutY="293.0" onAction="#signInToSignUp" prefHeight="23.0" prefWidth="246.0" text="Need To Create An Account? Sign Up Here" />
+      <PasswordField fx:id="pwdSignIn" layoutX="147.0" layoutY="196.0" prefHeight="26.0" prefWidth="334.0" />
+      <TextField fx:id="emailSignIn" layoutX="147.0" layoutY="143.0" prefHeight="26.0" prefWidth="334.0" />
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#signInToFlightSearch" text="Back" />
+      <Button fx:id="logInButton" layoutX="273.0" layoutY="250.0" mnemonicParsing="false" onAction="#confirmSignIn" text="Log in" />
    </children>
 </AnchorPane>

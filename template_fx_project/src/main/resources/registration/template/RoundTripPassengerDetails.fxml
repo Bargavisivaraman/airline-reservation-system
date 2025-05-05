@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="950" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.RoundTripPassengerDetailsController">
+    <VBox spacing="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+        
+        <!-- Header -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label fx:id="flightPlanText" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- Section Title -->
+        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Complete your passenger details" />
+
+        <!-- Passenger Section -->
+        <VBox fx:id="passengerBox" spacing="15" style="-fx-background-color: #fefefe; -fx-padding: 20; -fx-border-color: lightgray;">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Passenger 1 (Adult)" />
+            <CheckBox text="Use my Emirates Skywards account information" />
+
+            <HBox spacing="10">
+                <ComboBox fx:id="titleComboBox" prefWidth="120" promptText="Title" />
+                <TextField fx:id="firstNameField" prefWidth="200" promptText="First name" />
+                <TextField fx:id="lastNameField" prefWidth="200" promptText="Last name" />
+            </HBox>
+
+            <TextField fx:id="dobField" promptText="Date of birth" />
+
+            <Hyperlink text="Add frequent flyer membership details (optional)" />
+        </VBox>
+
+        <!-- Contact Details -->
+        <VBox spacing="10" style="-fx-background-color: #fefefe; -fx-padding: 20; -fx-border-color: lightgray;">
+            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Contact details" />
+            <HBox spacing="10">
+                <ComboBox fx:id="contactPersonCombo" prefWidth="200" promptText="Contact person" />
+                <ComboBox fx:id="countryCombo" prefWidth="200" promptText="Country/territory" />
+                <TextField fx:id="cellNumberField" prefWidth="200" promptText="Cell number" />
+            </HBox>
+            <TextField fx:id="emailField" promptText="Email address" />
+        </VBox>
+
+        <!-- Buttons -->
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button fx:id="backToResultsButton" text="Return to Flights" onAction="#backToFlightResults"/>
+            <Button style="-fx-background-color: #d32f2f; -fx-text-fill: white;" text="Continue to Options" />
+        </HBox>
+
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;">
+                <VBox fx:id="PassengerInfoContainer" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;" />
+            </ScrollPane>
+    </VBox>
+</AnchorPane>

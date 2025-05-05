@@ -38,7 +38,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <PasswordField layoutX="205.0" layoutY="263.0" prefHeight="26.0" prefWidth="257.0" />
+      <PasswordField fx:id="pwdConfirmField" layoutX="205.0" layoutY="263.0" prefHeight="26.0" prefWidth="257.0" />
       <Hyperlink layoutX="189.0" layoutY="351.0" onAction="#signUpToSignIn" text="Already Have An Account? Sign In Here" />
       <Label layoutX="85.0" layoutY="137.0" text="Last Name:">
          <font>

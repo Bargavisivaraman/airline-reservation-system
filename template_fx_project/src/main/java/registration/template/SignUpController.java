@@ -17,6 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -44,12 +46,54 @@ public class SignUpController {
     private TextField pwdField;
 
     @FXML
+    private TextField pwdConfirmField;
+
+    @FXML
     private TextField reservationIdField;
+
+    @FXML
+    private Button createAccountButton;
+
+    @FXML
+    private void initialize() {
+    // Add listeners to all relevant fields
+    firstNameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+    lastNameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+    emailField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+    pwdField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+    pwdConfirmField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+
+    // Disable button by default
+    createAccountButton.setDisable(true);
+}
+
+private void validateForm() {
+    String firstName = firstNameField.getText();
+    String lastName = lastNameField.getText();
+    String email = emailField.getText();
+    String password = pwdField.getText();
+    String confirmPassword = pwdConfirmField.getText();
+
+    boolean allFieldsFilled = !firstName.isBlank() &&
+                              !lastName.isBlank() &&
+                              !email.isBlank() &&
+                              !password.isBlank() &&
+                              !confirmPassword.isBlank();
+
+    boolean validEmail = email.matches("^\\S+@\\S+\\.\\S+$");
+    boolean passwordsMatch = password.equals(confirmPassword);
+
+    boolean formIsValid = allFieldsFilled && validEmail && passwordsMatch;
+
+    createAccountButton.setDisable(!formIsValid);
+
+}
 
     public void displayText() {
         
     }
     
+    // Allows switch between sign up and sign in pages
     public void signUpToSignIn(ActionEvent event) throws IOException {
         FXMLLoader Loader = new FXMLLoader(getClass().getResource("/registration/template/signin.fxml"));
         root = Loader.load();
@@ -65,7 +109,19 @@ public class SignUpController {
         String lastName = lastNameField.getText();
         String email = emailField.getText();
         String password = pwdField.getText();
+        String confirmPassword  = pwdField.getText();
         //String reservationId = reservationIdField.getText();
+
+        System.out.println("Password: " + password);
+        System.out.println("Confirm: " + confirmPassword);
+        System.out.println("Match? " + password.equals(confirmPassword));
+
+        if (confirmPassword == null || !password.equals(confirmPassword)) {
+            signUpDisplay.setText("Passwords do not match!");
+            System.out.println("Password mismatch – no data inserted.");
+            return;
+        }
+    
 
         DatabaseConnection userConnection = new DatabaseConnection();
         Connection conn2 = userConnection.getDBConnection();
@@ -82,19 +138,28 @@ public class SignUpController {
         
             stmt.executeUpdate();
             System.out.println("User added to database!");
+            
+            // Show success popup
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sign Up Successful");
+            alert.setHeaderText(null);
+            alert.setContentText("Successfully signed up!");
+            alert.showAndWait();
 
-            // Optional: Clear fields after insert
+            // Clear fields after insert
             firstNameField.clear();
             lastNameField.clear();
             emailField.clear();
             pwdField.clear();
-            // reservationIdField.clear();
+            pwdConfirmField.clear();
+            //reservationIdField.clear();
 
             stmt.close();
             conn2.close();
 
         } catch (Exception SQLException) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, SQLException);
+            signUpDisplay.setText("Something went wrong.");
         }
     }
 

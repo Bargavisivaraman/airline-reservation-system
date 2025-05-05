@@ -8,8 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -32,6 +35,9 @@ public class FlightSearchController {
     @FXML
     private ComboBox<String> fromDropDown, toDropDown;
 
+    @FXML
+    private Button searchButton;
+
 
     @FXML
     private ComboBox<Integer> noOfPassengersDropDown;
@@ -51,6 +57,20 @@ public class FlightSearchController {
     private DatePicker returnDate, departDate;
 
     @FXML
+    private Label userGreeting;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Button signInButton;
+
+    @FXML
+    private Button accountButton;
+
+    private String storedFirstName;
+
+    @FXML
     private void initialize() {
 
         ToggleGroup choice = new ToggleGroup();
@@ -63,10 +83,10 @@ public class FlightSearchController {
         // We need to set the ComboBox to use that list.
         fromDropDown.setEditable(true);
         toDropDown.setEditable(true);
-        noOfPassengersDropDown.setEditable(true);
+        noOfPassengersDropDown.setEditable(false);
         ObservableList<String> airportNameList = FXCollections.observableArrayList(getData());
         ObservableList<Integer> noOfPassengers = FXCollections.observableArrayList();
-        noOfPassengers.addAll(1, 2, 3, 4, 5, 6, 7 , 8, 9, 10);
+        noOfPassengers.addAll(1, 2, 3, 4, 5);
 
         System.out.println(noOfPassengers);
             
@@ -110,6 +130,10 @@ public class FlightSearchController {
                 });
             }
 
+            /* if (!UserSession.isLoggedIn()) {
+                disableFlightSearchUI();
+            } */
+
         });
 
         //To dropDown filtering
@@ -129,7 +153,56 @@ public class FlightSearchController {
             }
         });
 
+        departDate.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;"); //makes past dates pink as a visual cue to let the user know the date is
+                }
+            }
+        });
+        
+        returnDate.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                if (date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
+
+                LocalDate depart = departDate.getValue();
+                if (date.isBefore(depart.plusDays(1))) { // makes the return date to be at least one day after the departure date
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
+            }
+        });
+        
+
     }
+
+    private void disableFlightSearchUI() {
+        fromDropDown.setDisable(true);
+        toDropDown.setDisable(true);
+        noOfPassengersDropDown.setDisable(true);
+        roundTripRadioButton.setDisable(true);
+        oneWayRadioButton.setDisable(true);
+        departDate.setDisable(true);
+        returnDate.setDisable(true);
+    }
+
+    public void displayUserName(String firstName) {
+        this.storedFirstName = firstName;
+        userGreeting.setText("Hello, " + firstName + "!");
+        userGreeting.setVisible(true);
+        logoutButton.setVisible(true);
+        accountButton.setVisible(true);
+        signInButton.setVisible(false);
+    }
+
 
     public void goToSignIn(ActionEvent event) throws IOException {
         System.out.println("Inside goToSignIn");
@@ -149,26 +222,72 @@ public class FlightSearchController {
         stage.show(); // show the screen
     }
 
+    public void goToAccount(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
+        root = loader.load();
+    
+        Account accountController = loader.getController();
+        accountController.setUserName(storedFirstName); // Pass the user's name
+    
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void searchFlights(ActionEvent event) throws IOException {
       
         System.out.println("Inside searchFlights");
+
+        if (!UserSession.isLoggedIn()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Authentication Required");
+            alert.setHeaderText(null);
+            alert.setContentText("Please sign in before searching for flights.");
+            alert.showAndWait();
+            return;
+        }
+
         LocalDate departureDate = departDate.getValue();
         System.out.println(departureDate.toString());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightResults.fxml"));
-        System.out.println("After fxml loader");
-        root = loader.load();
-        System.out.println("After loading the root");
+        if(oneWayRadioButton.isSelected()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/OneWayFlightResults.fxml"));
+            System.out.println("After fxml loader");
+            root = loader.load();
+            System.out.println("After loading the root");
+    
+            OneWayFlightResultsController flightResultsPage = loader.getController();
+            //flightResultsPage.displayDepartDate(departureDate.toString());
+            flightResultsPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
+            flightResultsPage.storePassengerCountInfo(noOfPassengersDropDown.getValue());
+            flightResultsPage.setUserName(storedFirstName);
+    
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root); 
+            stage.setScene(scene);
+            stage.setTitle("One Way Flight Results");
+            stage.show(); // show the screen
 
-        FlightResultsController flightResultsPage = loader.getController();
-        flightResultsPage.displayDepartDate(departureDate.toString());
-        flightResultsPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
-
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root); 
-        stage.setScene(scene);
-        stage.setTitle("Available Flights");
-        stage.show(); // show the screen
+        } else if (roundTripRadioButton.isSelected()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/OutboundFlightResults.fxml"));
+            System.out.println("After fxml loader");
+            root = loader.load();
+            System.out.println("After loading the root");
+    
+            OutboundFlightResultsController2 outboundFlightPage = loader.getController();
+            outboundFlightPage.displayDepartDate(departureDate.toString());
+            outboundFlightPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
+            outboundFlightPage.storeReturnFlightDate(returnDate.getValue().toString());
+            outboundFlightPage.storePassengerCountInfo(noOfPassengersDropDown.getValue());
+            outboundFlightPage.setUserName(storedFirstName);
+    
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root); 
+            stage.setScene(scene);
+            stage.setTitle("Outbound Flight Results");
+            stage.show(); // show the screen
+        }
     }
 
     public void displayPreviousUserChoices(String departure, String arrival, LocalDate departDate) {
@@ -176,7 +295,6 @@ public class FlightSearchController {
         toDropDown.setValue(arrival);
         //departDate.set(departDate);
     }
-
 
 
     /**
