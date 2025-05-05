@@ -15,14 +15,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 //import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -51,6 +55,9 @@ public class OneWayFlightResultsController implements Initializable {
 
     @FXML
     private Label LocationDestination;
+
+    @FXML
+    private ComboBox<String> classDropDown;
 
     private String departureCode;
     private String arrivalCode;
@@ -129,8 +136,12 @@ public class OneWayFlightResultsController implements Initializable {
     
 
     private void loadFilteredFlightResults() {
-        flightResultsContainer.getChildren().clear();
-    
+
+        if (flightResultsContainer.getChildren().size() > 1) {
+            flightResultsContainer.getChildren().remove(1, flightResultsContainer.getChildren().size());
+        }
+
+        
         DatabaseConnection dbConn = new DatabaseConnection();
         Connection conn1 = dbConn.getDBConnection();
     
@@ -155,6 +166,14 @@ public class OneWayFlightResultsController implements Initializable {
                 String arrTime = set.getString("arrivalTime");
                 String duration = set.getString("duration");
 
+                double basePrice = price;
+                if(classDropDown.getValue().equals("Business Class")) {
+                    basePrice += 200;
+                } else if (classDropDown.getValue().equals("First Class")) {
+                    basePrice += 500;
+                }
+
+
                 // Outer VBox for one flight
                 VBox flightBox = new VBox(5);
                 flightBox.setStyle("-fx-border-color: gray; -fx-border-radius: 5; -fx-padding: 10;");
@@ -163,7 +182,7 @@ public class OneWayFlightResultsController implements Initializable {
                 Label routeLabel = new Label("Flight " + flightID + ": " + departure + " ➝ " + arrival);
                 Label departureTimeLabel = new Label("Departure: " + departTime);
                 Label arrivalTimeLabel = new Label("Arrival: " + arrTime);
-                Label priceLabel = new Label("Economy class from USD " + price);
+                Label priceLabel = new Label("Economy class from USD " + String.format("%.2f", basePrice));
                 priceLabel.setStyle("-fx-text-fill: green;");
                 Label seatsLabel = new Label("Seats Available: " + availableSeats);
                 Label flightTimeLabel = new Label("Flight Time: " + departTime + " - " + arrTime);
@@ -202,14 +221,8 @@ public class OneWayFlightResultsController implements Initializable {
                     priceLabel, seatsLabel,
                     selectButton, scrollBar
                 );
-
-                
-    
+ 
                 flightResultsContainer.getChildren().add(flightBox);
-    
-                /*if (flightResultsContainer.getChildren().size() == 1) {
-                    arrivalDept.setText("Flight " + flightID);
-                }*/
             }
 
             if (departureCode == null || arrivalCode == null) {
@@ -244,10 +257,10 @@ public class OneWayFlightResultsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
        // Check if FXML injected properly
-    if (flightResultsContainer == null) {
-        System.out.println("VBox not injected. Check fx:id or FXML file.");
-    } else {
-        System.out.println("VBox injected: " + flightResultsContainer);
+        if (flightResultsContainer == null) {
+            System.out.println("VBox not injected. Check fx:id or FXML file.");
+        } else {
+            System.out.println("VBox injected: " + flightResultsContainer);
 
         if(scrollPane != null) {
             scrollPane.setContent(flightResultsContainer);
@@ -257,12 +270,30 @@ public class OneWayFlightResultsController implements Initializable {
             System.out.println("ScrollPane not injected! Check fx:id or FXML file.");
         }
 
-        // Add a test flight block
-        VBox testFlight = new VBox(5);
-        testFlight.setStyle("-fx-border-color: red; -fx-padding: 10;");
-        testFlight.getChildren().add(new Label("TEST FLIGHT - this should be visible"));
-        flightResultsContainer.getChildren().add(testFlight);
-    }
+            // Add a test flight block
+            VBox testFlight = new VBox(5);
+            testFlight.setStyle("-fx-border-color: red; -fx-padding: 10;");
+            testFlight.getChildren().add(new Label("TEST FLIGHT - this should be visible"));
+            flightResultsContainer.getChildren().add(testFlight);
+        }
 
+        classDropDown = new ComboBox<>();
+        classDropDown.getItems().addAll(
+            "Economy Class",
+            "Business Class",
+            "First Class"
+        );
+        classDropDown.setValue("Economy Class");
+        classDropDown.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Dropdown changed from " + oldValue + " to " + newValue);
+            loadFilteredFlightResults();
+        });
+
+        HBox topSection = new HBox();
+        topSection.setPadding(new Insets(10));
+        topSection.setAlignment(Pos.CENTER_RIGHT);
+        topSection.getChildren().add(classDropDown);
+
+        flightResultsContainer.getChildren().add(0, topSection);
     }
 }

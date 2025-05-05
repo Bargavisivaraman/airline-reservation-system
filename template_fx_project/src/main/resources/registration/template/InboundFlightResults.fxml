@@ -30,10 +30,9 @@
             <Label fx:id="DataTimeFLightLabel" style="-fx-font-style: italic;" text="DataTime for flight" />
 
             <HBox spacing="10">
-                <ToggleButton text="Economy" />
-                <ToggleButton text="Premium Economy" />
-                <ToggleButton text="Business" />
-                <ToggleButton text="First" />
+                <Label text="Economy Class"/> 
+                <Label text="Business Class, +$200"/> 
+                <Label text="First Class, +500"/> 
             </HBox>
 
             <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;">

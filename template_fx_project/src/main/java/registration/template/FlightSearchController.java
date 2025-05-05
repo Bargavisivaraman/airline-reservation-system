@@ -239,14 +239,14 @@ public class FlightSearchController {
       
         System.out.println("Inside searchFlights");
 
-        if (!UserSession.isLoggedIn()) {
+        /* if (!UserSession.isLoggedIn()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Authentication Required");
             alert.setHeaderText(null);
             alert.setContentText("Please sign in before searching for flights.");
             alert.showAndWait();
             return;
-        }
+        } */
 
         LocalDate departureDate = departDate.getValue();
         System.out.println(departureDate.toString());
