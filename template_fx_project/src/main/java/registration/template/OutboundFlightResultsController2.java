@@ -67,7 +67,7 @@ public class OutboundFlightResultsController2 implements Initializable {
     private String returnDate;
     private Integer passengerCount;
     private String storedFirstName;
-    
+
 
     public void storePassengerCountInfo(Integer count) {
         this.passengerCount = count;
@@ -76,6 +76,10 @@ public class OutboundFlightResultsController2 implements Initializable {
 
     public void setUserName(String firstName) {
         this.storedFirstName = firstName;
+    }
+
+    public void storeDepartDate(String date) {
+        this.departDate = date;
     }
 
     public void storeReturnFlightDate(String returnDate) {
@@ -128,7 +132,6 @@ public class OutboundFlightResultsController2 implements Initializable {
     }
     
     private void loadFilteredFlightResults() {
-
         if (flightResultsContainer.getChildren().size() > 1) {
             flightResultsContainer.getChildren().remove(1, flightResultsContainer.getChildren().size());
         }
@@ -205,6 +208,7 @@ public class OutboundFlightResultsController2 implements Initializable {
                         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);
+                        stage.setMaximized(true);
                         stage.show();
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
@@ -247,8 +251,8 @@ public class OutboundFlightResultsController2 implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    
-        // Check if FXML injected properly
+
+    // Check if FXML injected properly
     if (flightResultsContainer == null) {
         System.out.println("VBox not injected. Check fx:id or FXML file.");
     } else {

@@ -13,11 +13,12 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         System.out.println("Inside start::" +getClass());
         Parent root = FXMLLoader.load(getClass().getResource("/registration/template/FlightSearch.fxml"));
+
         System.out.println("after FXML Loader");
         stage.setTitle("Flight Search");
-        stage.setScene(new Scene(root)); //setting screen dimensions 
-        
-        stage.show(); // show the screen
+        stage.setScene(new Scene(root));
+        stage.setMaximized(true);
+        stage.show();
     } 
 
     public static void main(String[] args) {

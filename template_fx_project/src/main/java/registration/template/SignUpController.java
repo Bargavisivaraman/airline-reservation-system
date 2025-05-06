@@ -56,41 +56,37 @@ public class SignUpController {
 
     @FXML
     private void initialize() {
-    // Add listeners to all relevant fields
-    firstNameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
-    lastNameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
-    emailField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
-    pwdField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
-    pwdConfirmField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        // Add listeners to all relevant fields
+        firstNameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        lastNameField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        emailField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        pwdField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
+        pwdConfirmField.textProperty().addListener((obs, oldVal, newVal) -> validateForm());
 
-    // Disable button by default
-    createAccountButton.setDisable(true);
-}
+        // Disable button by default
+        createAccountButton.setDisable(true);
+    }
 
-private void validateForm() {
-    String firstName = firstNameField.getText();
-    String lastName = lastNameField.getText();
-    String email = emailField.getText();
-    String password = pwdField.getText();
-    String confirmPassword = pwdConfirmField.getText();
+    private void validateForm() {
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String email = emailField.getText();
+        String password = pwdField.getText();
+        String confirmPassword = pwdConfirmField.getText();
 
-    boolean allFieldsFilled = !firstName.isBlank() &&
-                              !lastName.isBlank() &&
-                              !email.isBlank() &&
-                              !password.isBlank() &&
-                              !confirmPassword.isBlank();
+        boolean allFieldsFilled = !firstName.isBlank() &&
+                                !lastName.isBlank() &&
+                                !email.isBlank() &&
+                                !password.isBlank() &&
+                                !confirmPassword.isBlank();
 
-    boolean validEmail = email.matches("^\\S+@\\S+\\.\\S+$");
-    boolean passwordsMatch = password.equals(confirmPassword);
+        boolean validEmail = email.matches("^\\S+@\\S+\\.\\S+$");
+        boolean passwordsMatch = password.equals(confirmPassword);
 
-    boolean formIsValid = allFieldsFilled && validEmail && passwordsMatch;
+        boolean formIsValid = allFieldsFilled && validEmail && passwordsMatch;
 
-    createAccountButton.setDisable(!formIsValid);
+        createAccountButton.setDisable(!formIsValid);
 
-}
-
-    public void displayText() {
-        
     }
     
     // Allows switch between sign up and sign in pages
@@ -100,6 +96,7 @@ private void validateForm() {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

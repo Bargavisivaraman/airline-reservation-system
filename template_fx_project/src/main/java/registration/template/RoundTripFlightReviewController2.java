@@ -65,6 +65,11 @@ public class RoundTripFlightReviewController2 implements Initializable {
         System.out.println("Passenger Count in round trip flight review: " + passengerCount);
     }
 
+    public void storeReturnFlightDate(String returnFlightDate) {
+        this.inFlightDate = returnFlightDate;
+        System.out.println("Return Flight Date in round trip flight review: " + inFlightDate);
+    }
+
     // --- Method to set all flight review data ---
     public void setOutboundFlightDetails(String departureLocation, String arrivalLocation, String flightDate,
                                          String depTime, String arrTime,
@@ -86,6 +91,7 @@ public class RoundTripFlightReviewController2 implements Initializable {
         this.inDepLocation = departureLocation;
         this.inArrLocation = arrivalLocation;
         this.inFlightDate = flightDate;
+        System.out.println(inFlightDate);
         this.inDepTime = depTime;
         this.inArrTime = arrTime;
         this.inDuration = duration;
@@ -104,6 +110,7 @@ public class RoundTripFlightReviewController2 implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -121,6 +128,7 @@ public class RoundTripFlightReviewController2 implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

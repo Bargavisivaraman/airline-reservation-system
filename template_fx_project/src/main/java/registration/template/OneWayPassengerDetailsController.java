@@ -3,6 +3,8 @@ package registration.template;
 import java.io.IO;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -63,6 +65,7 @@ public class OneWayPassengerDetailsController {
         Scene scene = new Scene(root); 
         stage.setScene(scene);
         stage.setTitle("Flight Results");
+        stage.setMaximized(true);
         stage.show(); // show the screen
         
     }
@@ -93,12 +96,15 @@ public class OneWayPassengerDetailsController {
             departTime,
             arrivalTime,
             duration,
+
             price,
             passengerList
         );
 
         UserSession.addBooking(booking);
         System.out.println("Flight booked! Booking ID: " + bookingId);
+
+        storeBookingToDatabase(booking);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/AccountPage.fxml"));
         Parent root = loader.load();
@@ -109,8 +115,51 @@ public class OneWayPassengerDetailsController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
+
+    private void storeBookingToDatabase(Booking booking) {
+        try {
+            Connection conn = new DatabaseConnection().getDBConnection();
+
+            // Insert into bookings table
+            String bookingQuery = "INSERT INTO bookings (booking_id, user_email, departure_code, arrival_code, depart_date, depart_time, arrival_time, duration, price) " +
+                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement bookingStmt = conn.prepareStatement(bookingQuery);
+            bookingStmt.setString(1, booking.getBookingId());
+            bookingStmt.setString(2, UserSession.getEmail());
+            bookingStmt.setString(3, booking.getDepartureCode());
+            bookingStmt.setString(4, booking.getArrivalCode());
+            bookingStmt.setString(5, booking.getDepartDate());
+            bookingStmt.setString(6, booking.getDepartTime());
+            bookingStmt.setString(7, booking.getArrivalTime());
+            bookingStmt.setString(8, booking.getDuration());
+            bookingStmt.setDouble(9, booking.getPrice());
+
+            bookingStmt.executeUpdate();
+
+            // Insert passengers
+            String passengerSQL = "INSERT INTO passengers (booking_id, first_name, last_name) VALUES (?, ?, ?)";
+            PreparedStatement passengerStmt = conn.prepareStatement(passengerSQL);
+
+            for (Passenger p : booking.getPassengers()) {
+                passengerStmt.setString(1, booking.getBookingId());
+                passengerStmt.setString(2, p.getFirstName());
+                passengerStmt.setString(3, p.getLastName());
+                passengerStmt.executeUpdate();
+            }
+
+            bookingStmt.close();
+            passengerStmt.close();
+            conn.close();
+            System.out.println("✅ Booking stored in database");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
@@ -158,9 +207,10 @@ public class OneWayPassengerDetailsController {
             }
 
             passengerDetails.getChildren().addAll(nameRow);
-
             singlePassengerBox.getChildren().add(passengerDetails);
             passengerBox.getChildren().add(singlePassengerBox);
+
+            passengerInputFields.add(new TextField[] { firstNameField, lastNameField });
         }
     }
 

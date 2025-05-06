@@ -107,17 +107,14 @@ public class FlightSearchController {
         FilteredList<String> filteredFromList = new FilteredList<>(airportNameList, s -> true);
         FilteredList<String> filteredToList = new FilteredList<>(airportNameList, s -> true);
 
-        //populates dromdropdown and todropdown with their corresponding filteredlists
+        //populates fromDropdown and toDropdown with their corresponding filteredlists
         fromDropDown.setItems(filteredFromList);
         toDropDown.setItems(filteredToList);
 
         // from dropdown filtering
-
         fromDropDown.getEditor().textProperty().addListener((obs,oldValue,newValue)-> {
             final TextField editor =fromDropDown.getEditor();
             final String selected = fromDropDown.getSelectionModel().getSelectedItem();
-
-            //prevent override of user if selected already
 
             if(selected == null || !selected.equals(editor.getText())){
                 filteredFromList.setPredicate(item -> {
@@ -130,9 +127,9 @@ public class FlightSearchController {
                 });
             }
 
-            /* if (!UserSession.isLoggedIn()) {
+            if (!UserSession.isLoggedIn()) {
                 disableFlightSearchUI();
-            } */
+            }
 
         });
 
@@ -179,7 +176,7 @@ public class FlightSearchController {
                 super.updateItem(date, empty);
                 if (date.isBefore(LocalDate.now())) {
                     setDisable(true);
-                    setStyle("-fx-background-color: #ffc0cb;"); //makes past dates pink as a visual cue to let the user know the date is
+                    setStyle("-fx-background-color: #ffc0cb;"); 
                 }
             }
         });
@@ -194,7 +191,7 @@ public class FlightSearchController {
                 }
 
                 LocalDate depart = departDate.getValue();
-                if (date.isBefore(depart.plusDays(1))) { // makes the return date to be at least one day after the departure date
+                if (date.isBefore(depart.plusDays(1))) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffc0cb;");
                 }
@@ -238,6 +235,7 @@ public class FlightSearchController {
         Scene scene = new Scene(root); 
         stage.setScene(scene);
         stage.setTitle("Sign In Page");
+        stage.setMaximized(true);
         stage.show(); // show the screen
     }
 
@@ -251,6 +249,7 @@ public class FlightSearchController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -258,14 +257,14 @@ public class FlightSearchController {
       
         System.out.println("Inside searchFlights");
 
-        /* if (!UserSession.isLoggedIn()) {
+        if (!UserSession.isLoggedIn()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Authentication Required");
             alert.setHeaderText(null);
             alert.setContentText("Please sign in before searching for flights.");
             alert.showAndWait();
             return;
-        } */
+        } 
 
         LocalDate departureDate = departDate.getValue();
         System.out.println(departureDate.toString());
@@ -286,6 +285,7 @@ public class FlightSearchController {
             Scene scene = new Scene(root); 
             stage.setScene(scene);
             stage.setTitle("One Way Flight Results");
+            stage.setMaximized(true);
             stage.show(); // show the screen
 
         } else if (roundTripRadioButton.isSelected()) {
@@ -296,6 +296,7 @@ public class FlightSearchController {
     
             OutboundFlightResultsController2 outboundFlightPage = loader.getController();
             outboundFlightPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
+            outboundFlightPage.storeDepartDate(departDate.getValue().toString());
             outboundFlightPage.storeReturnFlightDate(returnDate.getValue().toString());
             outboundFlightPage.storePassengerCountInfo(noOfPassengersDropDown.getValue());
             outboundFlightPage.setUserName(storedFirstName);
@@ -304,6 +305,7 @@ public class FlightSearchController {
             Scene scene = new Scene(root); 
             stage.setScene(scene);
             stage.setTitle("Outbound Flight Results");
+            stage.setMaximized(true);
             stage.show(); // show the screen
         }
     }

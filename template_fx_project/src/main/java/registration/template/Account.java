@@ -69,21 +69,54 @@ public class Account {
 
     private void showBookings() {
         bookingContainer.getChildren().clear();
-
+    
         List<Booking> bookings = UserSession.getBookings();
-
+    
         if (bookings == null || bookings.isEmpty()) {
             bookingContainer.getChildren().add(new Label("No bookings found."));
         } else {
             for (Booking booking : bookings) {
-                Label label = new Label("Booking ID: " + booking.getBookingId()
-                    + " | " + booking.getSummary()
-                    + " | Passengers: " + booking.getPassengers().size());
-                label.setStyle("-fx-font-size: 14px;");
-                bookingContainer.getChildren().add(label);
+                VBox bookingBox = new VBox(8);
+                bookingBox.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
+                bookingBox.setPrefWidth(600);
+    
+                Label bookingIdLabel = new Label("Booking ID: " + booking.getBookingId());
+                bookingIdLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 15px;");
+                bookingIdLabel.setWrapText(true);
+    
+                Label outboundLabel = new Label("Outbound: " + booking.getDepartureCode() + " → " + booking.getArrivalCode()
+                        + " | " + booking.getDepartDate() + " @ " + booking.getDepartTime()
+                        + " → " + booking.getArrivalTime()
+                        + " | Duration: " + booking.getDuration());
+                outboundLabel.setWrapText(true);
+    
+                Label passengerLabel = new Label("Passengers: " + booking.getPassengers().size());
+                passengerLabel.setWrapText(true);
+    
+                Label priceLabel = new Label("Total Price: $" + String.format("%.2f", booking.getPrice()));
+                priceLabel.setWrapText(true);
+    
+                // Add outbound first
+                bookingBox.getChildren().addAll(bookingIdLabel, outboundLabel);
+    
+                // Then add return flight, if applicable
+                if (booking.getReturnDepartureCode() != null) {
+                    Label returnLabel = new Label("Return:   " + booking.getReturnDepartureCode() + " → " + booking.getReturnArrivalCode()
+                            + " | " + booking.getReturnDepartDate() + " @ " + booking.getReturnDepartTime()
+                            + " → " + booking.getReturnArrivalTime()
+                            + " | Duration: " + booking.getReturnDuration());
+                    returnLabel.setWrapText(true);
+                    bookingBox.getChildren().add(returnLabel);
+                }
+    
+                // Add passengers + price last
+                bookingBox.getChildren().addAll(passengerLabel, priceLabel);
+    
+                bookingContainer.getChildren().add(bookingBox);
             }
         }
     }
+    
 
     public void accountInfoToFlightSearch(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FlightSearch.fxml"));
@@ -97,6 +130,7 @@ public class Account {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 }

@@ -117,7 +117,6 @@ public class InboundFlightResultsController2 implements Initializable {
 
         OutboundFlightResultsController2 resultsPage = loader.getController();
         resultsPage.swapLocations(inDepLocation, inArrLocation);
-        //resultsPage.searchCriteria(inDepLocation, inArrLocation);
 
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -220,12 +219,13 @@ public class InboundFlightResultsController2 implements Initializable {
                                                                   outDuration, outPrice);
                         flightReviewPage.setInboundFlightDetails(inDepLocation, inArrLocation, inDepartDate, inDepTime, inArrTime, 
                                                                   inDuration, inPrice);
+                        flightReviewPage.storeReturnFlightDate(inDepartDate);
                         flightReviewPage.storePassengerCountInfo(passengerCount);
-                        //flightReviewPage.storeReturnFlightDate(inDepartDate);
 
                         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);
+                        stage.setMaximized(true);
                         stage.show();
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block

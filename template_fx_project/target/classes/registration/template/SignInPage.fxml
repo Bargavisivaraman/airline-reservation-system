@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="registration.template.SignInController"
-            prefHeight="400.0" prefWidth="600.0">
-   <children>
-      <!-- Page Title -->
-      <Label layoutX="249.0" layoutY="55.0" text="Sign In">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Label>
+            fx:controller="registration.template.SignInController">
 
-      <!-- Labels -->
-      <Label layoutX="74.0" layoutY="147.0" text="Email:" />
-      <Label layoutX="74.0" layoutY="200.0" text="Password:" />
+    <top>
+        <HBox alignment="TOP_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Back" onAction="#signInToFlightSearch"/>
+        </HBox>
+    </top>
 
-      <!-- Input Fields -->
-      <TextField fx:id="emailSignIn" layoutX="147.0" layoutY="143.0" prefHeight="26.0" prefWidth="334.0" />
-      <PasswordField fx:id="pwdSignIn" layoutX="147.0" layoutY="196.0" prefHeight="26.0" prefWidth="334.0" />
+    <center>
+        <VBox alignment="CENTER" spacing="15" maxWidth="500" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
 
-      <!-- Buttons -->
-      <Button fx:id="logInButton" layoutX="273.0" layoutY="250.0" mnemonicParsing="false" onAction="#confirmSignIn" text="Log in" />
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#signInToFlightSearch" text="Back" />
+            <Label text="Sign In">
+                <font><Font size="36.0" /></font>
+            </Label>
 
-      <!-- Hyperlink to Sign Up -->
-      <Hyperlink layoutX="175.0" layoutY="293.0" onAction="#signInToSignUp" prefHeight="23.0" prefWidth="246.0"
-                 text="Need To Create An Account? Sign Up Here" />
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Email:" prefWidth="80"/>
+                <TextField fx:id="emailSignIn" prefWidth="300"/>
+            </HBox>
 
-      <!-- Error message display -->
-      <Label fx:id="signInDisplay" layoutX="147.0" layoutY="325.0" prefWidth="334.0"
-             text="" textFill="red" style="-fx-font-size: 12;" />
-   </children>
-</AnchorPane>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Password:" prefWidth="80"/>
+                <PasswordField fx:id="pwdSignIn" prefWidth="300"/>
+            </HBox>
+
+            <Button fx:id="logInButton" text="Log in" onAction="#confirmSignIn" prefWidth="100"/>
+
+            <Hyperlink text="Need To Create An Account? Sign Up Here" onAction="#signInToSignUp"/>
+
+            <Label fx:id="signInDisplay" text="" textFill="red" style="-fx-font-size: 12;"/>
+        </VBox>
+    </center>
+</BorderPane>

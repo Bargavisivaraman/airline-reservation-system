@@ -132,6 +132,7 @@ public class OneWayFlightResultsController implements Initializable {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -149,6 +150,7 @@ public class OneWayFlightResultsController implements Initializable {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
 
     }
@@ -230,6 +232,7 @@ public class OneWayFlightResultsController implements Initializable {
                         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);
+                        stage.setMaximized(true);
                         stage.show();
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block

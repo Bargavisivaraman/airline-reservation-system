@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="950" prefWidth="900" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.RoundTripPassengerDetailsController">
-    <ScrollPane fitToWidth="true" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <VBox spacing="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20" style="-fx-padding: 20;">
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" 
+           xmlns:fx="http://javafx.com/fxml/1" 
+           fx:controller="registration.template.RoundTripPassengerDetailsController">
+    <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-padding: 20;">
+        <VBox spacing="20" alignment="TOP_CENTER" maxWidth="900" style="-fx-padding: 20;">
             
             <!-- Header -->
             <HBox alignment="CENTER_LEFT" spacing="10">
@@ -18,8 +21,8 @@
             <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Complete your passenger details" />
 
             <!-- Split content area into left and right -->
-            <HBox spacing="20" alignment="TOP_LEFT">
-
+            <HBox spacing="20" alignment="TOP_CENTER">
+                
                 <!-- LEFT SIDE: Passenger Details + Contact Details -->
                 <VBox spacing="20" prefWidth="600">
 
@@ -51,4 +54,4 @@
 
         </VBox>
     </ScrollPane>
-</AnchorPane>
+</StackPane>

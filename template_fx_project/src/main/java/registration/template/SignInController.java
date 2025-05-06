@@ -2,6 +2,7 @@ package registration.template;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,6 +43,7 @@ public class SignInController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -50,6 +52,7 @@ public class SignInController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -105,6 +108,7 @@ public class SignInController {
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
+                stage.setMaximized(true);
                 stage.show();
             } else {
                 Alert alert = new Alert(AlertType.ERROR);
@@ -119,4 +123,57 @@ public class SignInController {
             signInDisplay.setText("Database error. Please try again later.");
         }
     }
+
+    private void loadUserBookingsFromDatabase(String userEmail) {
+
+        try (Connection conn = new DatabaseConnection().getDBConnection()) {
+            String bookingQuery = "SELECT * FROM bookings WHERE user_email = ?";
+            java.sql.PreparedStatement bookingStmt = conn.prepareStatement(bookingQuery);
+            bookingStmt.setString(1, userEmail);
+
+            java.sql.ResultSet bookingSet = bookingStmt.executeQuery();
+
+            while (bookingSet.next()) {
+                String bookingId = bookingSet.getString("booking_id");
+                String departure = bookingSet.getString("departure_code");
+                String arrival = bookingSet.getString("arrival_code");
+                String date = bookingSet.getString("depart_date");
+                String depTime = bookingSet.getString("depart_time");
+                String arrTime = bookingSet.getString("arrival_time");
+                String duration = bookingSet.getString("duration");
+                double price = bookingSet.getDouble("price");
+
+                // Now load passengers
+                String passengerQuery = "SELECT * FROM passengers WHERE booking_id = ?";
+                java.sql.PreparedStatement passengerStmt = conn.prepareStatement(passengerQuery);
+                passengerStmt.setString(1, bookingId);
+                java.sql.ResultSet passengerSet = passengerStmt.executeQuery();
+
+                List<Passenger> passengers = new java.util.ArrayList<>();
+                while (passengerSet.next()) {
+                    String firstName = passengerSet.getString("first_name");
+                    String lastName = passengerSet.getString("last_name");
+                    passengers.add(new Passenger(firstName, lastName));
+                }
+
+                Booking booking = new Booking(
+                    bookingId, departure, arrival, date,
+                    depTime, arrTime, duration, price, passengers
+                );
+
+                UserSession.addBooking(booking);
+
+                passengerSet.close();
+                passengerStmt.close();
+            }
+
+            bookingSet.close();
+            bookingStmt.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to load bookings from Database");
+        }
+    }
+
 }

@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="registration.template.Account"
-            prefHeight="700.0" prefWidth="600.0">
-   <children>
+            fx:controller="registration.template.Account">
 
-      <!-- Header -->
-      <Label layoutY="30.0" prefWidth="600.0" alignment="CENTER" text="Account Details">
-         <font><Font size="30.0" /></font>
-      </Label>
+    <top>
+        <HBox alignment="TOP_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Back" onAction="#accountInfoToFlightSearch"/>
+        </HBox>
+    </top>
 
-      <!-- Titles -->
-      <Label layoutY="90.0" prefWidth="600.0" alignment="CENTER" text="First Name">
-         <font><Font size="16.0" /></font>
-      </Label>
-      <Label layoutY="145.0" prefWidth="600.0" alignment="CENTER" text="Last Name">
-         <font><Font size="16.0" /></font>
-      </Label>
-      <Label layoutY="200.0" prefWidth="600.0" alignment="CENTER" text="Email">
-         <font><Font size="16.0" /></font>
-      </Label>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
 
-      <!-- Dynamic User Data -->
-      <Label fx:id="firstNameValue" layoutY="115.0" prefWidth="600.0" alignment="CENTER" text="" />
-      <Label fx:id="lastNameValue" layoutY="170.0" prefWidth="600.0" alignment="CENTER" text="" />
-      <Label fx:id="emailValue" layoutY="225.0" prefWidth="600.0" alignment="CENTER" text="" />
+            <Label text="Account Details">
+                <font><Font size="30.0"/></font>
+            </Label>
 
-      <!-- Bookings Section -->
-      <Label layoutY="270.0" prefWidth="600.0" alignment="CENTER" text="My Bookings">
-         <font><Font size="18.0" /></font>
-      </Label>
+            <VBox spacing="10" alignment="CENTER">
+                <Label text="First Name" style="-fx-font-size: 16px;"/>
+                <Label fx:id="firstNameValue"/>
 
-      <!-- Bigger ScrollPane for Bookings -->
-      <ScrollPane layoutX="50.0" layoutY="300.0" prefWidth="500.0" prefHeight="330.0"
-                  fitToWidth="true" fitToHeight="false" vbarPolicy="ALWAYS"
-                  style="-fx-border-color: lightgray; -fx-background-color: #fafafa;">
-         <content>
-            <VBox fx:id="bookingContainer" spacing="10.0" style="-fx-padding: 10;" />
-         </content>
-      </ScrollPane>
+                <Label text="Last Name" style="-fx-font-size: 16px;"/>
+                <Label fx:id="lastNameValue"/>
 
-      <!-- Back Button -->
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
-              onAction="#accountInfoToFlightSearch" text="Back" />
+                <Label text="Email" style="-fx-font-size: 16px;"/>
+                <Label fx:id="emailValue"/>
+            </VBox>
 
-   </children>
-</AnchorPane>
+            <Label text="My Bookings">
+                <font><Font size="18.0"/></font>
+            </Label>
+
+            <ScrollPane fitToWidth="true" prefHeight="300" style="-fx-border-color: lightgray; -fx-background-color: #fafafa;">
+                <content>
+                    <VBox fx:id="bookingContainer" spacing="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </VBox>
+    </center>
+</BorderPane>

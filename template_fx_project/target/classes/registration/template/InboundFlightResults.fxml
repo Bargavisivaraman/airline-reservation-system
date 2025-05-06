@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToWidth="true" prefHeight="708.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.InboundFlightResultsController2">
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="registration.template.InboundFlightResultsController2">
+    <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-padding: 20;">
+        <VBox alignment="TOP_CENTER" spacing="15" maxWidth="800" style="-fx-padding: 20;">
+            <!-- Top Section -->
+            <VBox alignment="TOP_LEFT" spacing="10">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Spoink Airlines" />
+                <Label text="Round Trip"/>
+            </VBox>
 
-    <VBox spacing="15" style="-fx-padding: 20;">
-        <!-- Top Section -->
-        <VBox alignment="TOP_LEFT" spacing="10">
-            <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Spoink Airlines" />
-            <Label text="Round Trip"/>
+            <!-- Center Section -->
+            <VBox spacing="15">
+                <Button fx:id="BackButton" mnemonicParsing="false" text="Back" onAction="#backToOutbound"/>
+
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Choose your Inbound Flight" />
+                <Label text="Inclusive of airfare, taxes, fees, and carrier-imposed charges" />
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Economy Class"/> 
+                    <Label text="Business Class, +$200"/> 
+                    <Label text="First Class, +500"/> 
+                </HBox>
+
+                <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;">
+                    <VBox fx:id="flightResultsContainer" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;" />
+                </ScrollPane>
+            </VBox>
         </VBox>
-
-        <!-- Center Section -->
-        <VBox spacing="15">
-            <Button fx:id="BackButton" mnemonicParsing="false" text="Back" onAction="#backToOutbound"/>
-
-            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Choose your Inbound Flight" />
-            <Label text="Inclusive of airfare, taxes, fees, and carrier-imposed charges" />
-
-            <HBox spacing="10">
-                <Label text="Economy Class"/> 
-                <Label text="Business Class, +$200"/> 
-                <Label text="First Class, +500"/> 
-            </HBox>
-
-            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent;">
-                <VBox fx:id="flightResultsContainer" spacing="10" style="-fx-background-color: lightgray; -fx-padding: 10;" />
-            </ScrollPane>
-        </VBox>
-    </VBox>
-</ScrollPane>
+    </ScrollPane>
+</StackPane>
