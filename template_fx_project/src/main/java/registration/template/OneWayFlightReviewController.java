@@ -68,6 +68,10 @@ public class OneWayFlightReviewController implements Initializable {
         this.passengerCount = count;
     }
 
+    public void storeFlightDate(String returnFlightDate) {
+        this.flightDate = returnFlightDate;
+    }
+
     // --- Method to set all flight review data ---
     public void setFlightReviewDetails(String departureLocation, String arrivalLocation, String flightDate,
                                        String depTime, String arrTime,
@@ -79,6 +83,13 @@ public class OneWayFlightReviewController implements Initializable {
         this.arrTime = arrTime;
         this.duration = duration;
         this.totalPrice = totalPrice;
+
+        // Calculate total price using passenger count
+        if (passengerCount > 1) {
+            this.totalPrice = totalPrice * passengerCount;
+        } else {
+            this.totalPrice = totalPrice;
+        }
 
         updateReviewUI();
     }
@@ -98,12 +109,13 @@ public class OneWayFlightReviewController implements Initializable {
         root = loader.load();
 
         OneWayFlightResultsController resultsPage = loader.getController();
-        resultsPage.searchCriteria(departureLocation, arrivalLocation);
+        resultsPage.searchFromReview(departureLocation, arrivalLocation);
+        resultsPage.storePassengerCountInfo(passengerCount);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.show();
+        stage.show();   
     }
 
     public void continueToPassengers(ActionEvent event) throws IOException {
@@ -120,8 +132,6 @@ public class OneWayFlightReviewController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

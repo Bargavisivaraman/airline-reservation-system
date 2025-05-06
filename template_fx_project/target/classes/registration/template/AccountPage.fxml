@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="registration.template.Account"
+            prefHeight="700.0" prefWidth="600.0">
+   <children>
+
+      <!-- Header -->
+      <Label layoutY="30.0" prefWidth="600.0" alignment="CENTER" text="Account Details">
+         <font><Font size="30.0" /></font>
+      </Label>
+
+      <!-- Titles -->
+      <Label layoutY="90.0" prefWidth="600.0" alignment="CENTER" text="First Name">
+         <font><Font size="16.0" /></font>
+      </Label>
+      <Label layoutY="145.0" prefWidth="600.0" alignment="CENTER" text="Last Name">
+         <font><Font size="16.0" /></font>
+      </Label>
+      <Label layoutY="200.0" prefWidth="600.0" alignment="CENTER" text="Email">
+         <font><Font size="16.0" /></font>
+      </Label>
+
+      <!-- Dynamic User Data -->
+      <Label fx:id="firstNameValue" layoutY="115.0" prefWidth="600.0" alignment="CENTER" text="" />
+      <Label fx:id="lastNameValue" layoutY="170.0" prefWidth="600.0" alignment="CENTER" text="" />
+      <Label fx:id="emailValue" layoutY="225.0" prefWidth="600.0" alignment="CENTER" text="" />
+
+      <!-- Bookings Section -->
+      <Label layoutY="270.0" prefWidth="600.0" alignment="CENTER" text="My Bookings">
+         <font><Font size="18.0" /></font>
+      </Label>
+
+      <!-- Bigger ScrollPane for Bookings -->
+      <ScrollPane layoutX="50.0" layoutY="300.0" prefWidth="500.0" prefHeight="330.0"
+                  fitToWidth="true" fitToHeight="false" vbarPolicy="ALWAYS"
+                  style="-fx-border-color: lightgray; -fx-background-color: #fafafa;">
+         <content>
+            <VBox fx:id="bookingContainer" spacing="10.0" style="-fx-padding: 10;" />
+         </content>
+      </ScrollPane>
+
+      <!-- Back Button -->
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false"
+              onAction="#accountInfoToFlightSearch" text="Back" />
+
+   </children>
+</AnchorPane>

@@ -46,7 +46,7 @@ public class SignInController {
     }
 
     public void signInToSignUp(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("signup.fxml"));
+        root = FXMLLoader.load(getClass().getResource("SignUpPage.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -96,7 +96,7 @@ public class SignInController {
                 successAlert.showAndWait();
     
                 // Go to account.fxml and pass user data
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AccountPage.fxml"));
                 root = loader.load();
     
                 Account accountController = loader.getController();

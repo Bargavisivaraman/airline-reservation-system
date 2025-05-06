@@ -69,6 +69,7 @@ public class OneWayFlightResultsController implements Initializable {
     private Integer passengerCount;
 
     private String storedFirstName;
+    private String returnDate;
 
 
     public void displayDepartDate(String departureDate) {
@@ -90,17 +91,14 @@ public class OneWayFlightResultsController implements Initializable {
         loadFilteredFlightResults();
     }
 
-    public void backToSearch(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightSearch.fxml"));
-        root = loader.load();
+    public void searchFromReview(String departure, String arrival) {
+        this.departureCode = departure;
+        this.arrivalCode = arrival;
+        loadFilteredFlightResults();
+    }
 
-        FlightSearchController searchPage = loader.getController();
-        searchPage.displayUserName(storedFirstName);
-
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void storeFlightDate(String flightDate) {
+        this.departDate = flightDate;
     }
 
     public void DisplayLocation(String Location){
@@ -114,6 +112,27 @@ public class OneWayFlightResultsController implements Initializable {
 
     public void setUserName(String firstName) {
         this.storedFirstName = firstName;
+    }
+
+    public String getDepartureCode() {
+        return departureCode;
+    }
+
+    public String getArrivalCode() {
+        return arrivalCode;
+    }
+
+    public void backToSearch(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/FlightSearch.fxml"));
+        root = loader.load();
+
+        FlightSearchController searchPage = loader.getController();
+        searchPage.displayUserName(storedFirstName);
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void goToFlightReview(ActionEvent event)  throws IOException {
@@ -184,7 +203,6 @@ public class OneWayFlightResultsController implements Initializable {
                 Label arrivalTimeLabel = new Label("Arrival: " + arrTime);
                 Label priceLabel = new Label("Economy class from USD " + String.format("%.2f", basePrice));
                 priceLabel.setStyle("-fx-text-fill: green;");
-                Label seatsLabel = new Label("Seats Available: " + availableSeats);
                 Label flightTimeLabel = new Label("Flight Time: " + departTime + " - " + arrTime);
                 
                 ScrollBar scrollBar = new ScrollBar();
@@ -199,12 +217,16 @@ public class OneWayFlightResultsController implements Initializable {
                         Parent root = loader.load();
                     
                         System.out.println("After loading the root");
+                        System.out.println(price);
 
                         OneWayFlightReviewController flightReviewPage = loader.getController();
+                        flightReviewPage.storePassengerCountInfo(passengerCount);
                         flightReviewPage.setFlightReviewDetails(departureCode, arrivalCode, departDate, departTime, arrTime, 
                                                                 duration, price);
-                        flightReviewPage.storePassengerCountInfo(passengerCount);
+                        flightReviewPage.storeFlightDate(returnDate);
 
+                       
+                        
                         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
                         scene = new Scene(root);
                         stage.setScene(scene);
@@ -218,8 +240,7 @@ public class OneWayFlightResultsController implements Initializable {
                 flightBox.getChildren().addAll(
                     durationLabel, routeLabel,
                     departureTimeLabel, arrivalTimeLabel,
-                    priceLabel, seatsLabel,
-                    selectButton, scrollBar
+                    priceLabel, selectButton, scrollBar
                 );
  
                 flightResultsContainer.getChildren().add(flightBox);
@@ -246,14 +267,7 @@ public class OneWayFlightResultsController implements Initializable {
         }
     }
 
-    public String getDepartureCode() {
-        return departureCode;
-    }
 
-    public String getArrivalCode() {
-        return arrivalCode;
-    }
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
        // Check if FXML injected properly

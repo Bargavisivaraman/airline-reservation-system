@@ -67,12 +67,7 @@ public class OutboundFlightResultsController2 implements Initializable {
     private String returnDate;
     private Integer passengerCount;
     private String storedFirstName;
-
-
-    public void displayDepartDate(String departureDate) {
-        this.departDate = departureDate;
-        DataTimeFLightLabel.setText(departureDate);
-    }
+    
 
     public void storePassengerCountInfo(Integer count) {
         this.passengerCount = count;
@@ -83,6 +78,26 @@ public class OutboundFlightResultsController2 implements Initializable {
         this.storedFirstName = firstName;
     }
 
+    public void storeReturnFlightDate(String returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public String getDepartureCode() {
+        return departureCode;
+    }
+
+    public String getArrivalCode() {
+        return arrivalCode;
+    }
+
+    public void DisplayLocation(String Location){
+        System.out.println("Setting LocationDestination to: " + Location);
+        if (LocationDestination == null) {
+            System.out.println("LocationDestination is null! Check fx:id in FXML.");
+        } else {
+            LocationDestination.setText(Location);
+        }
+    }
 
     public void searchCriteria(String departure, String arrival) {
         System.out.println("Inside searchCriteria. The criteria are: " + departure + " & " + arrival + ".");
@@ -111,21 +126,7 @@ public class OutboundFlightResultsController2 implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void DisplayLocation(String Location){
-        System.out.println("Setting LocationDestination to: " + Location);
-        if (LocationDestination == null) {
-            System.out.println("LocationDestination is null! Check fx:id in FXML.");
-        } else {
-            LocationDestination.setText(Location);
-        }
-    }
-
-    public void storeReturnFlightDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
     
-
     private void loadFilteredFlightResults() {
 
         if (flightResultsContainer.getChildren().size() > 1) {
@@ -243,14 +244,6 @@ public class OutboundFlightResultsController2 implements Initializable {
             Logger.getLogger(OneWayFlightResultsController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
-    public String getDepartureCode() {
-        return departureCode;
-    }
-
-    public String getArrivalCode() {
-        return arrivalCode;
-    }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -294,6 +287,5 @@ public class OutboundFlightResultsController2 implements Initializable {
         topSection.getChildren().add(classDropDown);
 
         flightResultsContainer.getChildren().add(0, topSection);
-
     }
 }

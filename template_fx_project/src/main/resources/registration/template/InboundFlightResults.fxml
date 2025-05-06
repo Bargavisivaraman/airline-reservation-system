@@ -14,8 +14,7 @@
         <!-- Top Section -->
         <VBox alignment="TOP_LEFT" spacing="10">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Spoink Airlines" />
-            <Label fx:id="LocationDestination" text="Location to Destination" />
-            <Label text="Return • One passenger" />
+            <Label text="Round Trip"/>
         </VBox>
 
         <!-- Center Section -->
@@ -23,11 +22,7 @@
             <Button fx:id="BackButton" mnemonicParsing="false" text="Back" onAction="#backToOutbound"/>
 
             <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Choose your Inbound Flight" />
-            <Label text="Home to destination" />
-            <Hyperlink text="page with info on baggage and fees" />
-            <Label style="-fx-text-fill: green;" text="Lowest total price for one passenger USD 2,522.21" />
             <Label text="Inclusive of airfare, taxes, fees, and carrier-imposed charges" />
-            <Label fx:id="DataTimeFLightLabel" style="-fx-font-style: italic;" text="DataTime for flight" />
 
             <HBox spacing="10">
                 <Label text="Economy Class"/> 

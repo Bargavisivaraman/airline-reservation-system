@@ -2,6 +2,8 @@ package registration.template;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -31,12 +33,26 @@ public class RoundTripPassengerDetailsController {
     private Parent root;
 
     @FXML
-    private VBox passengerBox;
+    private VBox passengerBox, flightInfoBox;;
 
     @FXML
-    private Label flightPlanText;
-    @FXML
-    private Label flightTotalCost;
+    private Label flightPlanText, flightTotalCost;
+
+
+    private String departureCode;
+    private String arrivalCode;
+    private String departDate;
+    private String departTime;
+    private String arrivalTime;
+    private String duration;
+    private double price;
+
+    private final List<TextField[]> passengerInputFields = new ArrayList<>();
+
+    public void setNumberOfPassengers(Integer numberOfPassengers) {
+        System.out.println("Number of passengers in round trip passenger details: " + numberOfPassengers);
+        populateEntryFields(numberOfPassengers);
+    }
 
     @FXML
     private void backToFlightResults(ActionEvent event) throws IOException {
@@ -51,14 +67,52 @@ public class RoundTripPassengerDetailsController {
         
     }
 
-    public void setNumberOfPassengers(Integer numberOfPassengers) {
-        System.out.println("Number of passengers in round trip passenger details: " + numberOfPassengers);
-        populateEntryFields(numberOfPassengers);
+    @FXML
+    private void bookFlight(ActionEvent event) throws IOException {
+
+        List<Passenger> passengerList = new ArrayList<>();
+
+        for (TextField[] fields : passengerInputFields) {
+            String firstName = fields[0].getText().trim();
+            String lastName = fields[1].getText().trim();
+
+            if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                passengerList.add(new Passenger(firstName, lastName));
+            }
+        }
+
+        String bookingId = "SPK" + (int)(Math.random() * 1_000_000);
+
+        Booking booking = new Booking(
+            bookingId,
+            departureCode,
+            arrivalCode,
+            departDate,
+            departTime,
+            arrivalTime,
+            duration,
+            price,
+            passengerList
+        );
+
+        UserSession.addBooking(booking);
+        System.out.println("Flight booked! Booking ID: " + bookingId);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/account.fxml"));
+        Parent root = loader.load();
+
+        Account accountController = loader.getController();
+        accountController.setUserName(UserSession.getFirstName());
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void populateEntryFields(Integer numberOfPassengers) {
     if (numberOfPassengers == null) {
-        System.out.println("⚠ numberOfPassengers is null! Defaulting to 1.");
+        System.out.println("numberOfPassengers is null! Defaulting to 1.");
         numberOfPassengers = 1;
     }
 
@@ -70,20 +124,13 @@ public class RoundTripPassengerDetailsController {
 
         Label passengerLabel = new Label("Passenger " + i);
 
-        ComboBox<String> titleDropdown = new ComboBox<>();
-        titleDropdown.getItems().addAll("Mr.", "Ms.", "Mrs.", "Dr.");
-        titleDropdown.setPromptText("Title");
-
         TextField firstNameField = new TextField();
         firstNameField.setPromptText("First name");
 
         TextField lastNameField = new TextField();
         lastNameField.setPromptText("Last name");
 
-        DatePicker dobPicker = new DatePicker();
-        dobPicker.setPromptText("Date of birth");
-
-        HBox nameRow = new HBox(10, titleDropdown, firstNameField, lastNameField);
+        HBox nameRow = new HBox(10, firstNameField, lastNameField);
 
         VBox passengerDetails = new VBox(10);
         passengerDetails.getChildren().add(passengerLabel);
@@ -92,21 +139,75 @@ public class RoundTripPassengerDetailsController {
         if (i == 1) {
             CheckBox useAccountInfo = new CheckBox("Use my Spoink Account Info");
             passengerDetails.getChildren().add(useAccountInfo);
+
+            useAccountInfo.setOnAction(e -> {
+                if (useAccountInfo.isSelected() && UserSession.isLoggedIn()) {
+                    firstNameField.setText(UserSession.getFirstName());
+                    lastNameField.setText(UserSession.getLastName());
+                } else {
+                    firstNameField.clear();
+                    lastNameField.clear();
+                }
+            });
         }
 
-        passengerDetails.getChildren().addAll(nameRow, dobPicker);
+        passengerDetails.getChildren().addAll(nameRow);
 
         singlePassengerBox.getChildren().add(passengerDetails);
         passengerBox.getChildren().add(singlePassengerBox);
     }
     }
 
-    public void showFlightDetails(String departureCode, String arrivalCode, String departDate, String departTime, String arrivalTime, 
+    public void showOutboundFlightDetails(String departureCode, String arrivalCode, String departDate, String departTime, String arrivalTime, 
+                                  String duration, double price) {
+        
+        flightInfoBox.getChildren().clear();  // Clear previous info if any
+
+        VBox flightDetailsBox = new VBox(8);
+        flightDetailsBox.setStyle("-fx-padding: 15; -fx-background-color: #f2f2f2; -fx-border-color: lightgray; -fx-border-radius: 5;");
+
+        Label title = new Label("Outbound Flight");
+        title.setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
+
+        Label flightPlanLabel = new Label("Route: " + departureCode + " → " + arrivalCode);
+        Label flightDateLabel = new Label("Date: " + departDate);
+        Label departTimeLabel = new Label("Departure Time: " + departTime);
+        Label arrivalTimeLabel = new Label("Arrival Time: " + arrivalTime);
+        Label durationLabel = new Label("Duration: " + duration);
+        Label priceLabel = new Label("Cost: $" + String.format("%.2f", price));
+
+        flightDetailsBox.getChildren().addAll(
+            title, flightPlanLabel, flightDateLabel,
+            departTimeLabel, arrivalTimeLabel, durationLabel,
+            priceLabel
+        );
+
+        flightInfoBox.getChildren().add(flightDetailsBox);
+    }
+
+    public void showInboundFlightDetails(String departureCode, String arrivalCode, String departDate, String departTime, String arrivalTime, 
                                   String duration, double price) {
 
-        flightPlanText.setText(departureCode + " → " + arrivalCode);
-        flightTotalCost.setText("Total cost: $" + price);
+        VBox returnFlightBox = new VBox(8);
+        returnFlightBox.setStyle("-fx-padding: 15; -fx-background-color: #f2f2f2; -fx-border-color: lightgray; -fx-border-radius: 5;");
 
+        Label title = new Label("Return Flight");
+        title.setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
+
+        Label flightPlanLabel = new Label("Route: " + departureCode + " → " + arrivalCode);
+        Label flightDateLabel = new Label("Date: " + departDate);
+        Label departTimeLabel = new Label("Departure Time: " + departTime);
+        Label arrivalTimeLabel = new Label("Arrival Time: " + arrivalTime);
+        Label durationLabel = new Label("Duration: " + duration);
+        Label priceLabel = new Label("Cost: $" + String.format("%.2f", price));
+
+        returnFlightBox.getChildren().addAll(
+            title, flightPlanLabel, flightDateLabel,
+            departTimeLabel, arrivalTimeLabel, durationLabel,
+            priceLabel
+        );
+
+        flightInfoBox.getChildren().add(returnFlightBox);
     }
     
 }

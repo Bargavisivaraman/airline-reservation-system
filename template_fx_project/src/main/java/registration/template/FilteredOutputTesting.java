@@ -10,7 +10,7 @@ public class FilteredOutputTesting extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/oneWayResults.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/OneWaFlightResults.fxml"));
         Parent root = loader.load();
 
         OneWayFlightResultsController controller = loader.getController();

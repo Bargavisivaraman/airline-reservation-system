@@ -95,7 +95,7 @@ private void validateForm() {
     
     // Allows switch between sign up and sign in pages
     public void signUpToSignIn(ActionEvent event) throws IOException {
-        FXMLLoader Loader = new FXMLLoader(getClass().getResource("/registration/template/signin.fxml"));
+        FXMLLoader Loader = new FXMLLoader(getClass().getResource("/registration/template/SignInPage.fxml"));
         root = Loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -121,7 +121,6 @@ private void validateForm() {
             System.out.println("Password mismatch – no data inserted.");
             return;
         }
-    
 
         DatabaseConnection userConnection = new DatabaseConnection();
         Connection conn2 = userConnection.getDBConnection();

@@ -94,24 +94,6 @@ public class RoundTripFlightReviewController2 implements Initializable {
         updateInboundReviewUI();
     }
 
-    // --- Update the FXML labels ---
-    private void updateOutboundReviewUI() {
-        flightPlanLabel.setText(outDepLocation + " ➝ " + outArrLocation);
-        outboundDetailsLabel.setText("Outbound flight from " + outDepLocation + " to " + outArrLocation);
-        outboundDateLabel.setText("Your flight is on: " + outFlightDate);
-        outFlightRouteLabel.setText(outDepLocation + " ➝ " + outArrLocation);
-        outFlightTimesLabel.setText(outDepTime + " → " + outArrTime);
-        outPriceLabel.setText(String.format("USD %.2f", outPrice));
-    }
-
-    private void updateInboundReviewUI() {
-        inboundDetailsLabel.setText("Inbound flight from " + inDepLocation + " to " + inArrLocation);
-        inboundDateLabel.setText("Your flight is on: " + inFlightDate);
-        inFlightRouteLabel.setText(inDepLocation + " ➝ " + inArrLocation);
-        inFlightTimesLabel.setText(inDepTime + " → " + inArrTime);
-        inPriceLabel.setText(String.format("USD %.2f", inPrice));
-    }
-
     public void backToFlightResults(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/OutboundFlightResults.fxml"));
         root = loader.load();
@@ -130,9 +112,11 @@ public class RoundTripFlightReviewController2 implements Initializable {
         root = loader.load();
 
         RoundTripPassengerDetailsController passengerInfoEntryPage = loader.getController();
-        /* passengerInfoEntryPage.showFlightDetails(departureLocation, arrivalLocation, flightDate, depTime, arrTime,
-                                                 duration, totalPrice); */
         passengerInfoEntryPage.setNumberOfPassengers(passengerCount);
+        passengerInfoEntryPage.showOutboundFlightDetails(outDepLocation, outArrLocation, outFlightDate, outDepTime, outArrTime,
+                                                         outDuration, outPrice);
+        passengerInfoEntryPage.showInboundFlightDetails(inDepLocation, inArrLocation, inFlightDate, inDepTime, inArrTime,
+                                                        inDuration, inPrice);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -140,7 +124,23 @@ public class RoundTripFlightReviewController2 implements Initializable {
         stage.show();
     }
 
+    // --- Update the FXML labels ---
+    private void updateOutboundReviewUI() {
+        flightPlanLabel.setText(outDepLocation + " ➝ " + outArrLocation);
+        outboundDetailsLabel.setText("Outbound flight from " + outDepLocation + " to " + outArrLocation);
+        outboundDateLabel.setText("Your flight is on: " + outFlightDate);
+        outFlightRouteLabel.setText(outDepLocation + " ➝ " + outArrLocation);
+        outFlightTimesLabel.setText(outDepTime + " → " + outArrTime);
+        outPriceLabel.setText(String.format("USD %.2f", outPrice));
+    }
 
+    private void updateInboundReviewUI() {
+        inboundDetailsLabel.setText("Inbound flight from " + inDepLocation + " to " + inArrLocation);
+        inboundDateLabel.setText("Your flight is on: " + inFlightDate);
+        inFlightRouteLabel.setText(inDepLocation + " ➝ " + inArrLocation);
+        inFlightTimesLabel.setText(inDepTime + " → " + inArrTime);
+        inPriceLabel.setText(String.format("USD %.2f", inPrice));
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -153,6 +153,26 @@ public class FlightSearchController {
             }
         });
 
+        fromDropDown.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                toDropDown.setItems(FXCollections.observableArrayList(
+                    airportNameList.filtered(item -> !item.equals(newVal))
+                ));
+            } else {
+                toDropDown.setItems(airportNameList);
+            }
+        });
+
+        toDropDown.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                fromDropDown.setItems(FXCollections.observableArrayList(
+                    airportNameList.filtered(item -> !item.equals(newVal))
+                ));
+            } else {
+                fromDropDown.setItems(airportNameList);
+            }
+        });
+
         departDate.setDayCellFactory(picker -> new javafx.scene.control.DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
@@ -180,7 +200,6 @@ public class FlightSearchController {
                 }
             }
         });
-        
 
     }
 
@@ -207,7 +226,7 @@ public class FlightSearchController {
     public void goToSignIn(ActionEvent event) throws IOException {
         System.out.println("Inside goToSignIn");
         
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/SignIn.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/registration/template/SignInPage.fxml"));
         root = loader.load();
         System.out.println("After loading the root");
 
@@ -223,7 +242,7 @@ public class FlightSearchController {
     }
 
     public void goToAccount(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("AccountPage.fxml"));
         root = loader.load();
     
         Account accountController = loader.getController();
@@ -258,10 +277,10 @@ public class FlightSearchController {
             System.out.println("After loading the root");
     
             OneWayFlightResultsController flightResultsPage = loader.getController();
-            //flightResultsPage.displayDepartDate(departureDate.toString());
             flightResultsPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
             flightResultsPage.storePassengerCountInfo(noOfPassengersDropDown.getValue());
             flightResultsPage.setUserName(storedFirstName);
+            flightResultsPage.storeFlightDate(departDate.getValue().toString());
     
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root); 
@@ -276,7 +295,6 @@ public class FlightSearchController {
             System.out.println("After loading the root");
     
             OutboundFlightResultsController2 outboundFlightPage = loader.getController();
-            outboundFlightPage.displayDepartDate(departureDate.toString());
             outboundFlightPage.searchCriteria(fromDropDown.getValue(), toDropDown.getValue());
             outboundFlightPage.storeReturnFlightDate(returnDate.getValue().toString());
             outboundFlightPage.storePassengerCountInfo(noOfPassengersDropDown.getValue());
@@ -296,10 +314,6 @@ public class FlightSearchController {
         //departDate.set(departDate);
     }
 
-
-    /**
-     * Here we will define the method that builds the List used by the ComboBox
-     */
     private List<String> getData() {
         DatabaseConnection dbConn = new DatabaseConnection();
         Connection conn1 = dbConn.getDBConnection();
